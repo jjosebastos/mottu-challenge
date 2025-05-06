@@ -27,10 +27,7 @@ public class Filial {
             nullable = false,
             length = 36)
     private UUID id;
-
-    @Size (max = 17)
     private String cnpj;
-    @NotBlank(message = "O valor do nome näo ser nulo")
     private String nome;
     @Enumerated(EnumType.STRING)
     private CodPais codPais;

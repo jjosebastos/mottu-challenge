@@ -1,5 +1,6 @@
 package br.com.fiap.mottu_challenge.repository;
 
+import br.com.fiap.mottu_challenge.dto.response.FilialResponse;
 import br.com.fiap.mottu_challenge.model.Filial;
 import org.springframework.data.jpa.repository.JpaRepository;
 
