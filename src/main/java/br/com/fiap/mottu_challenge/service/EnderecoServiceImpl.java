@@ -72,7 +72,6 @@ public class EnderecoServiceImpl implements EnderecoService {
         if(id == null){
             throw new IllegalArgumentException();
         }
-
         this.enderecoRepository.deleteById(id);
     }
 

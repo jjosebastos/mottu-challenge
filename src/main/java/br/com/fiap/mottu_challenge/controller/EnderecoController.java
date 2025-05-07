@@ -4,6 +4,9 @@ import br.com.fiap.mottu_challenge.dto.request.EnderecoRequest;
 import br.com.fiap.mottu_challenge.dto.request.EnderecoRequestList;
 import br.com.fiap.mottu_challenge.dto.response.EnderecoResponse;
 import br.com.fiap.mottu_challenge.service.EnderecoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +37,15 @@ public class EnderecoController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(
+            summary = "Deleta uma filial pelo ID",
+            description = "Remove a filial correspondente ao ID fornecido do sistema.",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Filial deletada com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "ID inválido fornecido"),
+                    @ApiResponse(responseCode = "404", description = "Filial não encontrada")
+            }
+    )
     public void  delete(@PathVariable UUID id) {
         this.enderecoService.delete(id);
     }
