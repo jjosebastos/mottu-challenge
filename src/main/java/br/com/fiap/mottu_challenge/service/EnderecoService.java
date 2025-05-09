@@ -5,7 +5,6 @@ import br.com.fiap.mottu_challenge.dto.request.EnderecoRequestList;
 import br.com.fiap.mottu_challenge.dto.response.EnderecoResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
