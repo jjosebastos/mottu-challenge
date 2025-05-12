@@ -7,7 +7,7 @@ public enum CodPais {
     BRA("1"),
     MEX("2");
 
-    private String codPais;
+    private final String codPais;
     CodPais(String codPais) {
         this.codPais = codPais;
     }
