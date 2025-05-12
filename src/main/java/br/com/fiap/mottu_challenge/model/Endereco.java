@@ -35,7 +35,7 @@ public class Endereco {
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "filialId")
+    @JoinColumn(name = "filial_id")
     private Filial filial;
 
 
