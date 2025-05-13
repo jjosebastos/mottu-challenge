@@ -11,7 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class MotoRequest {
-    private UUID idMoto;
     @NotBlank
     private String placa;
     @NotBlank

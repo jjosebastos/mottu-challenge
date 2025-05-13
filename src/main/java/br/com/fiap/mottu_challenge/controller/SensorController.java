@@ -17,23 +17,23 @@ import java.util.UUID;
 public class SensorController {
 
     @Autowired
-    private SensorService service;
+    private SensorService sensorService;
 
     @PostMapping
     public ResponseEntity<SensorResponse> createSensor(@Valid @RequestBody SensorRequest request) {
-        var saved = this.service.save(request);
+        var saved = this.sensorService.save(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SensorResponse> updateSensor(@PathVariable UUID id, @Valid @RequestBody SensorRequest request) {
-        var updated = this.service.update(id, request);
+        var updated = this.sensorService.update(id, request);
         return ResponseEntity.ok(updated);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Sensor> readSensor(@PathVariable UUID id) {
-        var found = this.service.getById(id);
+        var found = this.sensorService.getById(id);
         if(found == null) {
             return ResponseEntity.noContent().build();
         }
@@ -43,6 +43,6 @@ public class SensorController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSensor(@PathVariable UUID id) {
-        this.service.deleteById(id);
+        this.sensorService.deleteById(id);
     }
 }

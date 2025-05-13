@@ -31,7 +31,7 @@ public class EnderecoController {
     responses = {
         @ApiResponse(responseCode = "201", description = "Endereço criado com sucesso."),
         @ApiResponse(responseCode = "400", description = "Requisição inválida."),
-        @ApiResponse(responseCode = "40", description = "ID Filial inválido.")
+        @ApiResponse(responseCode = "404", description = "ID Filial inválido.")
     })
     public ResponseEntity<List<EnderecoResponse>> post(@Valid @RequestBody  EnderecoRequestList endereco) {
         var created = this.enderecoService.create(endereco);
