@@ -7,6 +7,7 @@ import br.com.fiap.mottu_challenge.model.enums.Modelo;
 import br.com.fiap.mottu_challenge.repository.FilialRepository;
 import br.com.fiap.mottu_challenge.repository.MotoRepository;
 import br.com.fiap.mottu_challenge.repository.OperadorRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class MotoService {
     @Autowired
     private FilialRepository filialRepository;
 
+    @Transactional
     public MotoResponse save(MotoRequest moto) {
         var foundOperador = this.operadorRepository.findById(moto.getIdOperador())
                 .orElseThrow(NoSuchElementException::new);
@@ -37,10 +39,8 @@ public class MotoService {
         return this.motoToResponse(savedMoto);
     }
 
+    @Transactional
     public MotoResponse update(UUID id, MotoRequest moto) {
-        if(id == null) {
-            throw new IllegalArgumentException();
-        }
         var motoFound = this.repository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         motoFound.setPlaca(moto.getPlaca());
@@ -55,6 +55,7 @@ public class MotoService {
         return this.motoToResponse(updatedMoto);
     }
 
+    @Transactional
     public void delete(UUID uuid) {
         this.repository.findById(uuid)
                 .orElseThrow(NoSuchElementException::new);
@@ -67,9 +68,6 @@ public class MotoService {
     }
 
     public List<Moto> getByModelo(Modelo modelo) {
-        if(Objects.isNull(modelo)) {
-            throw new IllegalArgumentException();
-        }
         var findAll = this.repository.findAll();
         return findAll.stream()
                 .filter(moto -> moto.getModelo().equals(modelo))

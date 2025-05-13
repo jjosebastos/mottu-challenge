@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EnderecoRequest {
-    private UUID idFilial;
+
     @NotBlank(message = "Logradouro não pode ser branco.")
     private String logradouro;
     @NotBlank(message = "Numero não pode ser branco.")
@@ -27,4 +27,5 @@ public class EnderecoRequest {
     private String cep;
     @NotBlank(message = "Complemento não pode ser branco.")
     private String complemento;
+    private UUID idFilial;
 }

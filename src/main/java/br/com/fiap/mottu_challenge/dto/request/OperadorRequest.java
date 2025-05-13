@@ -11,12 +11,12 @@ import java.util.UUID;
 @Getter
 @Setter
 public class OperadorRequest {
-    @NotBlank(message = "Nome não pode ser vazio")
+    @NotBlank(message = "Nome não pode ser vazio.")
     private String nome;
-    @NotBlank(message = "Cpf não pode ser vazio")
+    @NotBlank(message = "Cpf não pode ser vazio.")
     private String cpf;
-    @NotBlank(message = "Rg não pode ser vazio")
+    @NotBlank(message = "Rg não pode ser vazio.")
     private String rg;
-    @Past(message = "Data de n")
+    @Past(message = "Data de de nascimento precisa estar no passado.")
     private LocalDate dataNascimento;
 }

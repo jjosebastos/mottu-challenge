@@ -40,16 +40,13 @@ public class FilialService {
 
     @Transactional
     public FilialResponse update(UUID id, FilialRequest input) {
-        var found = this.repository.findById(id);
-        if (found.isEmpty()) {
-            throw new NoSuchElementException();
-        }
-        Filial filial = found.get();
-        filial.setDataAbertura(input.getDataAbertura());
-        filial.setCnpj(input.getCnpj());
-        filial.setNome(input.getNome());
-        filial.setCodPais(input.getCdPais());
-        var updated = repository.save(filial);
+        var found = this.repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(id.toString()));
+        found.setDataAbertura(input.getDataAbertura());
+        found.setCnpj(input.getCnpj());
+        found.setNome(input.getNome());
+        found.setCodPais(input.getCdPais());
+        var updated = repository.save(found);
 
         return toFilialResponse(updated);
     }

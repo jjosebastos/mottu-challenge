@@ -46,19 +46,18 @@ public class EnderecoService {
     }
 
     public Endereco getById(UUID id) {
-        if(Objects.isNull(id)){
-            throw new IllegalArgumentException();
-        }
         return this.enderecoRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
     }
 
+    @Transactional
     public void delete(UUID id) {
-        var found = this.enderecoRepository.findById(id)
+        this.enderecoRepository.findById(id)
                 .orElseThrow(NoSuchElementException::new);
         this.enderecoRepository.deleteById(id);
     }
 
+    @Transactional
     public EnderecoResponse update(UUID id, EnderecoRequest input) {
         if(Objects.isNull(id)){
             throw new IllegalArgumentException();
@@ -72,7 +71,10 @@ public class EnderecoService {
         found.setComplemento(input.getComplemento());
         found.setUf(input.getUf());
         found.setCep(input.getCep());
-        return this.toFilialResponse(found);
+
+        var updated = this.enderecoRepository.save(found);
+
+        return this.toFilialResponse(updated);
     }
 
     private Endereco enderecoMapper(EnderecoRequest request) {

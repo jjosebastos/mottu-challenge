@@ -11,14 +11,14 @@ import java.util.UUID;
 @Getter
 @Setter
 public class MotoRequest {
-    @NotBlank
+    @NotBlank(message = "Placa não pode estar em branco.")
     private String placa;
-    @NotBlank
+    @NotBlank(message = "Modelo não pode estar em branco.")
     private Modelo modelo;
-    @NotBlank
+    @NotBlank(message = "Chassi não pode estar em branco.")
     private String chassi;
-    @NotNull
+    @NotNull(message = "Id Operador não pode ser nulo.")
     private UUID idOperador;
-    @NotNull
+    @NotNull(message = "Id Filial não pode ser nulo.")
     private UUID idFilial;
 }

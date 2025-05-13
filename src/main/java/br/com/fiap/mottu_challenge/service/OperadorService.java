@@ -43,19 +43,13 @@ public class OperadorService {
 
     @Transactional
     public ResponseEntity<OperadorResponse> updateById(UUID id, OperadorRequest operadorRequest) {
-        if(id == null) {
-            throw new IllegalArgumentException("Id do operador esta nulo..");
-        }
-        var found = this.operadorRepository.findById(id);
-        if (found.isEmpty()) {
-            throw new NoSuchElementException();
-        }
-        Operador operador = found.get();
-        operador.setNome(operadorRequest.getNome());
-        operador.setCpf(operadorRequest.getCpf());
-        operador.setRg(operadorRequest.getRg());
-        operador.setDataNascimento(operadorRequest.getDataNascimento());
-        var updated = this.operadorRepository.save(operador);
+        var found = this.operadorRepository.findById(id)
+                .orElseThrow();
+        found.setNome(operadorRequest.getNome());
+        found.setCpf(operadorRequest.getCpf());
+        found.setRg(operadorRequest.getRg());
+        found.setDataNascimento(operadorRequest.getDataNascimento());
+        var updated = this.operadorRepository.save(found);
         var response = this.toOperadorResponse(updated);
         return ResponseEntity.ok(response);
     }
