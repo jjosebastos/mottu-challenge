@@ -5,6 +5,7 @@ import br.com.fiap.mottu_challenge.dto.response.GeofenceResponse;
 import br.com.fiap.mottu_challenge.model.Geofence;
 import br.com.fiap.mottu_challenge.repository.FilialRepository;
 import br.com.fiap.mottu_challenge.repository.GeofenceRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class GeofenceService {
     @Autowired
     private FilialRepository filialRepository;
 
+    @Transactional
     public GeofenceResponse create (GeofenceRequest request){
         var filialId = request.getIdFilial();
         var found = this.filialRepository.findById(filialId)
@@ -36,9 +38,10 @@ public class GeofenceService {
 
     }
 
+    @Transactional
     public GeofenceResponse update (UUID idGeofence, GeofenceRequest request){
-        var foundGeo = this.geofenceRepository.findById(idGeofence)
-                .orElseThrow(IllegalArgumentException::new);
+            var foundGeo = this.geofenceRepository.findById(idGeofence)
+                .orElseThrow(NoSuchElementException::new);
 
         foundGeo.setLatitude(request.getLatitude());
         foundGeo.setLongitude(request.getLongitude());
@@ -48,21 +51,22 @@ public class GeofenceService {
         var foundFi = this.filialRepository.findById(request.getIdFilial())
                 .orElseThrow(NoSuchElementException::new);
         foundGeo.setFilial(foundFi);
+
         var update = this.geofenceRepository.save(foundGeo);
+
         return this.toGeofenceResponse(update);
     }
 
+    @Transactional
     public void delete (UUID idGeofence){
-        var found = this.geofenceRepository.findById(idGeofence);
-        if(found.isEmpty()) {
-            throw new IllegalArgumentException();
-        }
+        this.geofenceRepository.findById(idGeofence)
+                .orElseThrow(NoSuchElementException::new);
         this.geofenceRepository.deleteById(idGeofence);
     }
 
     public Geofence getById (UUID idGeofence){
         return this.geofenceRepository.findById(idGeofence)
-                .orElse(null);
+                .orElseThrow(NoSuchElementException::new);
     }
 
     private GeofenceResponse toGeofenceResponse(Geofence geofence){

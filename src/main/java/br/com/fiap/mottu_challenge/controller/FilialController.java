@@ -26,7 +26,7 @@ public class FilialController {
 
     @PostMapping
     @CacheEvict(value = "filiais", allEntries = true)
-    @Operation(summary = "Cadastrar filial", description = "Insere uma filial...", responses = {
+    @Operation(summary = "Cadastrar filial", description = "Insere uma filial.", responses = {
             @ApiResponse(responseCode = "201"),
             @ApiResponse(responseCode = "400"),
     })

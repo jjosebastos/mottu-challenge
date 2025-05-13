@@ -15,7 +15,6 @@ import java.util.UUID;
 
 
 @Service
-@AllArgsConstructor
 public class SensorService {
 
     @Autowired
@@ -23,9 +22,6 @@ public class SensorService {
 
     @Transactional
     public SensorResponse save(SensorRequest request) {
-        if(request.getIdSensor() != null) {
-            throw new IllegalArgumentException();
-        }
         var sensor = new Sensor();
         sensor.setFirmware(request.getFirmware());
         sensor.setTipo(request.getTipo());
@@ -36,16 +32,12 @@ public class SensorService {
 
     @Transactional
     public SensorResponse update(@PathVariable UUID id, SensorRequest request) {
-        if(request.getIdSensor() == null || id == null) {
-            throw new IllegalArgumentException();
-        }
         var found = this.sensorRepository.findById(id).orElseThrow(
                 NoSuchElementException::new);
-        Sensor sensor = new Sensor();
-        sensor.setTipo(found.getTipo());
-        sensor.setFirmware(found.getFirmware());
-        sensor.setDataHoraAtualizacao(found.getDataHoraAtualizacao());
-        var saved = this.sensorRepository.save(sensor);
+        found.setTipo(request.getTipo());
+        found.setFirmware(request.getFirmware());
+        found.setDataHoraAtualizacao(request.getDataHoraAtualizacao());
+        var saved = this.sensorRepository.save(found);
         return this.toSensorResponse(saved);
     }
 
@@ -53,11 +45,10 @@ public class SensorService {
         return this.sensorRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void deleteById(UUID id) {
-        var found = this.sensorRepository.findById(id);
-        if(found.isEmpty()) {
-            throw new NoSuchElementException();
-        }
+        this.sensorRepository.findById(id)
+                .orElseThrow(NoSuchElementException::new);
         this.sensorRepository.deleteById(id);
     }
 

@@ -3,6 +3,7 @@ package br.com.fiap.mottu_challenge.dto.request;
 import br.com.fiap.mottu_challenge.model.enums.CodPais;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -19,8 +20,8 @@ public class FilialRequest {
     private String cnpj;
     @NotBlank(message = "Nome não pode ser vazio.")
     private String nome;
-    @NotBlank(message = "Codigo do Pais não pode ser vazio.")
+    @NotNull(message = "Codigo do Pais não pode ser vazio.")
     private CodPais cdPais;
-    @PastOrPresent(message = "Data de abertura precisa ser no presente ou no passado.")
+    @NotNull
     private LocalDate dataAbertura;
 }
