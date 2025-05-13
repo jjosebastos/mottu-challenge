@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,11 @@ public class FilialController {
     private FilialService filialService;
 
     @PostMapping
+    @CacheEvict(value = "filiais", allEntries = true)
+    @Operation(summary = "Cadastrar filial", description = "Insere uma filial...", responses = {
+            @ApiResponse(responseCode = "201"),
+            @ApiResponse(responseCode = "400"),
+    })
     public ResponseEntity<List<FilialResponse>> create(@Valid @RequestBody FilialRequestList input) {
         var created = filialService.create(input);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -50,6 +56,7 @@ public class FilialController {
         this.filialService.delete(id);
     }
 
+    @Cacheable("filiais")
     @GetMapping("/{id}")
     public ResponseEntity<FilialResponse> get(@PathVariable UUID id) {
         var found = filialService.getById(id);
