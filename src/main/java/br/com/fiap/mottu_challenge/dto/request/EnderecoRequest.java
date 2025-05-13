@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class EnderecoRequest {
-    private UUID uuid;
+    private UUID idFilial;
     @NotBlank(message = "Logradouro não pode ser branco.")
     private String logradouro;
     @NotBlank(message = "Numero não pode ser branco.")
