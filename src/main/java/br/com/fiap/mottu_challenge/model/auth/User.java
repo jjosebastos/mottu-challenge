@@ -1,10 +1,9 @@
-package br.com.fiap.mottu_challenge.model;
+package br.com.fiap.mottu_challenge.model.auth;
 
 import br.com.fiap.mottu_challenge.model.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

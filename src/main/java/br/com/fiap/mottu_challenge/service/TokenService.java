@@ -1,7 +1,7 @@
 package br.com.fiap.mottu_challenge.service;
 
-import br.com.fiap.mottu_challenge.model.Token;
-import br.com.fiap.mottu_challenge.model.User;
+import br.com.fiap.mottu_challenge.model.auth.Token;
+import br.com.fiap.mottu_challenge.model.auth.User;
 import br.com.fiap.mottu_challenge.model.enums.UserRole;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

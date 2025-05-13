@@ -1,6 +1,6 @@
 package br.com.fiap.mottu_challenge.controller;
 
-import br.com.fiap.mottu_challenge.model.User;
+import br.com.fiap.mottu_challenge.model.auth.User;
 import br.com.fiap.mottu_challenge.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
