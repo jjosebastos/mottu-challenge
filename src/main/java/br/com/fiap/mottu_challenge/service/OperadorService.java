@@ -73,7 +73,6 @@ public class OperadorService {
 
     private Operador operadorMapper(OperadorRequest request) {
         return Operador.builder()
-                .idOperador(request.getId())
                 .nome(request.getNome())
                 .rg(request.getRg())
                 .cpf(request.getCpf())
