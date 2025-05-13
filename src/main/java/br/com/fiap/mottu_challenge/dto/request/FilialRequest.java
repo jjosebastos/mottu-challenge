@@ -13,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class FilialRequest {
-    private UUID idFilial;
     @NotBlank(message = "O valor do CNPJ não pode ser vazio")
     @Size(max = 17, message = "O CNPJ deve ter no máximo 17 caracteres")
     private String cnpj;
