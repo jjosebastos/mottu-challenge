@@ -33,7 +33,7 @@ public class EnderecoController {
         @ApiResponse(responseCode = "400", description = "Requisição inválida."),
         @ApiResponse(responseCode = "404", description = "ID Filial inválido.")
     })
-    public ResponseEntity<List<EnderecoResponse>> post(@Valid @RequestBody  EnderecoRequestList endereco) {
+    public ResponseEntity<List<EnderecoResponse>> create(@Valid @RequestBody  EnderecoRequestList endereco) {
         var created = this.enderecoService.create(endereco);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -45,7 +45,7 @@ public class EnderecoController {
             @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
             @ApiResponse(responseCode = "404", description = "Endereco não encontrado.")
     })
-    public ResponseEntity<EnderecoResponse> put(@PathVariable UUID id,@RequestBody @Valid EnderecoRequest endereco) {
+    public ResponseEntity<EnderecoResponse> update(@PathVariable UUID id,@RequestBody @Valid EnderecoRequest endereco) {
         var updated = this.enderecoService.update(id, endereco);
         return ResponseEntity.ok(updated);
     }
@@ -58,7 +58,7 @@ public class EnderecoController {
             @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
             @ApiResponse(responseCode = "404", description = "Endereco não encontrado.")
     })
-    public ResponseEntity<Endereco> get(@PathVariable UUID id) {
+    public ResponseEntity<Endereco> getById(@PathVariable UUID id) {
         var found = this.enderecoService.getById(id);
         return ResponseEntity.ok(found);
     }
@@ -71,7 +71,7 @@ public class EnderecoController {
             @ApiResponse(responseCode = "400", description = "ID fornecido invalido."),
             @ApiResponse(responseCode = "404", description = "Endereco não encontrada.")
     })
-    public void delete(@PathVariable UUID id) {
+    public void deleteById(@PathVariable UUID id) {
         this.enderecoService.delete(id);
     }
 

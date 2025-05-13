@@ -11,8 +11,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class OperadorRequest {
-
-    private UUID id;
     @NotBlank(message = "Nome não pode ser vazio")
     private String nome;
     @NotBlank(message = "Cpf não pode ser vazio")

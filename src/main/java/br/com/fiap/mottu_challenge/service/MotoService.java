@@ -56,7 +56,7 @@ public class MotoService {
     }
 
     public void delete(UUID uuid) {
-        var found = this.repository.findById(uuid)
+        this.repository.findById(uuid)
                 .orElseThrow(NoSuchElementException::new);
         this.repository.deleteById(uuid);
     }
