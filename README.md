@@ -1,4 +1,5 @@
-# 📦 Projeto: API Spring Boot com JWT, H2 e Oracle
+# 📦 Projeto: Digitalização de Patios Mottu
+## ☕ Squad: CodeCrafters
 
 ## ⚙️ Tecnologias Utilizadas
 
