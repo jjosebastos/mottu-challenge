@@ -33,8 +33,8 @@ public class User implements UserDetails {
     @NotBlank
     private String password;
 
-    @Pattern(regexp = "^(ADMIN|USER)$", message = "Role deve ser ADMIN ou USER")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

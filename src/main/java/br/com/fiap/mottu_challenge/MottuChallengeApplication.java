@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "API Money Flow", description = "Aqui vai a descrição", version = "v1"))
+@OpenAPIDefinition(info = @Info(title = "API CodeCrafters", description = "API de digitalização de pátios.", version = "v1"))
 public class MottuChallengeApplication {
 
 	public static void main(String[] args) {
