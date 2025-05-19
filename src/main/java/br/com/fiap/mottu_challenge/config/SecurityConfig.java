@@ -29,7 +29,6 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)

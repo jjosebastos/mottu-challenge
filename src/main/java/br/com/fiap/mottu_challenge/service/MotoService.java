@@ -3,10 +3,13 @@ package br.com.fiap.mottu_challenge.service;
 import br.com.fiap.mottu_challenge.dto.request.MotoRequest;
 import br.com.fiap.mottu_challenge.dto.response.MotoResponse;
 import br.com.fiap.mottu_challenge.model.Moto;
+import br.com.fiap.mottu_challenge.model.Operador;
+import br.com.fiap.mottu_challenge.model.Patio;
 import br.com.fiap.mottu_challenge.model.enums.Modelo;
 import br.com.fiap.mottu_challenge.repository.FilialRepository;
 import br.com.fiap.mottu_challenge.repository.MotoRepository;
 import br.com.fiap.mottu_challenge.repository.OperadorRepository;
+import br.com.fiap.mottu_challenge.repository.PatioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,59 +19,50 @@ import java.util.*;
 @Service
 public class MotoService {
     @Autowired
-    private MotoRepository repository;
+    private MotoRepository motoRepository;
     @Autowired
     private OperadorRepository operadorRepository;
     @Autowired
-    private FilialRepository filialRepository;
+    private PatioRepository patioRepository;
 
     @Transactional
-    public MotoResponse save(MotoRequest moto) {
-        var foundOperador = this.operadorRepository.findById(moto.getIdOperador())
-                .orElseThrow(NoSuchElementException::new);
-        var foundFilial = this.filialRepository.findById(moto.getIdFilial())
-                .orElseThrow(NoSuchElementException::new);
-        var saved = new Moto();
-        saved.setPlaca(moto.getPlaca());
-        saved.setModelo(moto.getModelo());
-        saved.setChassi(moto.getChassi());
-        saved.setOperador(foundOperador);
-        saved.setFilial(foundFilial);
-
-        var savedMoto = this.repository.save(saved);
+    public MotoResponse save(MotoRequest request) {
+        var moto = new Moto();
+        moto.setPlaca(request.getPlaca());
+        moto.setModelo(request.getModelo());
+        moto.setChassi(request.getChassi());
+        moto.setFlagAtivo(true);
+        moto.setOperador(getOperador(request.getIdOperador()));
+        moto.setPatio(getPatio(request.getIdPatio()));
+        var savedMoto = this.motoRepository.save(moto);
         return this.motoToResponse(savedMoto);
     }
 
     @Transactional
-    public MotoResponse update(UUID id, MotoRequest moto) {
-        var motoFound = this.repository.findById(id)
-                .orElseThrow(NoSuchElementException::new);
-        motoFound.setPlaca(moto.getPlaca());
-        motoFound.setModelo(moto.getModelo());
-        motoFound.setChassi(moto.getChassi());
-
-        var operadorFound = this.operadorRepository.findById(moto.getIdOperador()).orElse(null);
-        var filialFound = this.filialRepository.findById(moto.getIdFilial()).orElse(null);
-        motoFound.setFilial(filialFound);
-        motoFound.setOperador(operadorFound);
-        var updatedMoto = this.repository.save(motoFound);
+    public MotoResponse update(UUID id, MotoRequest request) {
+        var foundMoto = getMoto(id);
+        foundMoto.setPlaca(request.getPlaca());
+        foundMoto.setModelo(request.getModelo());
+        foundMoto.setChassi(request.getChassi());
+        foundMoto.setPatio(getPatio(request.getIdPatio()));
+        foundMoto.setOperador(getOperador(request.getIdOperador()));
+        var updatedMoto = this.motoRepository.save(foundMoto);
         return this.motoToResponse(updatedMoto);
     }
 
     @Transactional
     public void delete(UUID uuid) {
-        this.repository.findById(uuid)
-                .orElseThrow(NoSuchElementException::new);
-        this.repository.deleteById(uuid);
+        var foundMoto = getMoto(uuid);
+        foundMoto.setFlagAtivo(false);
+        this.motoRepository.save(foundMoto);
     }
 
-    public Moto getById(UUID uuid) {
-        var found = this.repository.findById(uuid);
-        return found.orElse(null);
+    public Moto getById(UUID idMoto) {
+        return this.motoRepository.findByIdAndFlagAtivoTrue(idMoto);
     }
 
     public List<Moto> getByModelo(Modelo modelo) {
-        var findAll = this.repository.findAll();
+        var findAll = this.motoRepository.findAll();
         return findAll.stream()
                 .filter(moto -> moto.getModelo().equals(modelo))
                 .toList();
@@ -80,9 +74,29 @@ public class MotoService {
                 .modelo(moto.getModelo())
                 .placa(moto.getPlaca())
                 .chassi(moto.getChassi())
-                .idOperador(moto.getOperador().getIdOperador())
-                .idFilial(moto.getFilial().getId())
+                .idOperador(moto.getOperador() != null ? moto.getOperador().getIdOperador() : null)
+                .idPatio(moto.getPatio().getIdPatio())
                 .build();
     }
 
+    private Moto getMoto(UUID uuid) {
+        return this.motoRepository.findById(uuid)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    private Operador getOperador(UUID uuid) {
+        if(uuid == null) {
+            return null;
+        }
+        return this.operadorRepository.findById(uuid)
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    public Patio getPatio(UUID uuid) {
+        if(uuid == null) {
+            return null;
+        }
+        return this.patioRepository.findById(uuid)
+                .orElseThrow(NoSuchElementException::new);
+    }
 }

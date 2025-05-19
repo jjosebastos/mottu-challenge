@@ -23,13 +23,17 @@ public class Moto {
     private String placa;
     private Modelo modelo;
     private String chassi;
+
+    private Boolean flagAtivo;
+
+    @JsonBackReference("pa_mo")
     @ManyToOne
-    @JsonBackReference("fi_mo")
-    @JoinColumn(name = "filial_id")
-    private Filial filial;
-    @ManyToOne
+    @JoinColumn(name = "patio")
+    private Patio patio;
+
     @JsonBackReference("op_mo")
-    @JoinColumn(name = "operador_id")
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "operador", nullable = true)
     private Operador operador;
 
 }
