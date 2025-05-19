@@ -1,9 +1,9 @@
 package br.com.fiap.mottu_challenge.controller;
 
-import br.com.fiap.mottu_challenge.dto.request.ManutencaoRequest;
-import br.com.fiap.mottu_challenge.dto.response.ManutencaoResponse;
-import br.com.fiap.mottu_challenge.model.Manutencao;
-import br.com.fiap.mottu_challenge.service.ManutencaoService;
+import br.com.fiap.mottu_challenge.dto.request.PatioGeomRequest;
+import br.com.fiap.mottu_challenge.dto.response.PatioGeomResponse;
+import br.com.fiap.mottu_challenge.model.PatioGeom;
+import br.com.fiap.mottu_challenge.service.PatioGeomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -17,58 +17,58 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/manutencao")
-public class ManutencaoController {
+@RequestMapping("/patiogeom")
+public class PatioGeomController {
 
     @Autowired
-    private ManutencaoService manutencaoService;
+    private PatioGeomService patioGeomService;
 
     @PostMapping
-    @CacheEvict(value = "manutencoes", allEntries = true)
-    @Operation(summary = "Cadastrar Manutenção", description = "Insere uma Manutençao.", responses = {
-            @ApiResponse(responseCode = "201", description = "Criada com sucesso."),
+    @CacheEvict("patiogeom")
+    @Operation(summary = "Cadastrar PatioGeom", description = "Insere um registro PatioGeom.", responses = {
+            @ApiResponse(responseCode = "201", description = "Criado com sucesso."),
             @ApiResponse(responseCode = "400", description = "Requisição inválida"),
             @ApiResponse(responseCode = "404", description = "Registro não encontrado."),
     })
-    public ResponseEntity<ManutencaoResponse> create(@Valid @RequestBody ManutencaoRequest request) {
-        var saved = this.manutencaoService.save(request);
+    public ResponseEntity<PatioGeomResponse> create(@Valid @RequestBody PatioGeomRequest patioGeom) {
+        var saved = this.patioGeomService.save(patioGeom);
         return ResponseEntity.status(201).body(saved);
     }
 
     @PutMapping("/{id}")
-    @CacheEvict(value = "manutencoes")
-    @Operation(summary = "Atualizar Manutenção", description = "Atualiza registros de manutenção com base no ID fornecido.", responses = {
+    @CacheEvict("patiogeom")
+    @Operation(summary = "Atualizar PatioGeom", description = "Atualiza registros de PatioGeom com base no ID fornecido.", responses = {
             @ApiResponse(responseCode = "200", description = "Atualizado com sucesso."),
             @ApiResponse(responseCode = "400", description = "Requisição inválida."),
             @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
     })
-    public ResponseEntity<ManutencaoResponse> update(@PathVariable UUID id,
-                                                     @Valid @RequestBody ManutencaoRequest request) {
-        var saved = this.manutencaoService.update(id, request);
-        return ResponseEntity.status(200).body(saved);
+    public ResponseEntity<PatioGeomResponse> put(@PathVariable UUID id,
+                                                 @Valid @RequestBody PatioGeomRequest patioGeom) {
+        var updated = this.patioGeomService.update(id, patioGeom);
+        return ResponseEntity.status(200).body(updated);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Remover manutenções", description = "Atualiza a flag de manutenção com base no ID fornecido.", responses = {
+    @Operation(summary = "Remover PatioGeom", description = "Atualiza a flag de PatioGeom com base no ID fornecido.", responses = {
             @ApiResponse(responseCode = "204", description = "Removido com sucesso."),
             @ApiResponse(responseCode = "400", description = "Requisição inválida."),
             @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
     })
     public void delete(@PathVariable UUID id) {
-        this.manutencaoService.delete(id);
+        this.patioGeomService.delete(id);
     }
 
     @GetMapping("/{id}")
-    @Cacheable("manutencao")
-    @Operation(summary = "Buscar Manutenções", description = "Busca registros de Manutenção com base no ID fornecido.",  responses = {
+    @Cacheable("patiogeom")
+    @Operation(summary = "Buscar PatioGeom", description = "Busca registros de PatioGeom com base no ID fornecido.",  responses = {
             @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
             @ApiResponse(responseCode = "400", description = "Requisição inválida."),
             @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
     })
-    public ResponseEntity<Manutencao> get(@PathVariable UUID id) {
-        var found = this.manutencaoService.findById(id);
-        return ResponseEntity.status(200).body(found);
+    public ResponseEntity<PatioGeom> getById(@PathVariable UUID id) {
+        var saved = this.patioGeomService.findById(id);
+        return ResponseEntity.status(200).body(saved);
     }
-}
 
+}
