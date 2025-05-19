@@ -28,6 +28,7 @@ public class TokenService {
 
     public User getUserFromToken(String jwt){
         var jwtVerified = JWT.require(algorithm).build().verify(jwt);
+        System.out.println(jwtVerified.getSubject());
         return User.builder()
                 .id(Long.valueOf(jwtVerified.getSubject()))
                 .email(jwtVerified.getClaim("email").asString())

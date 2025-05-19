@@ -47,7 +47,7 @@ public class ValidationHandler {
     @ExceptionHandler(NoSuchElementException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public SimpleError notFound(NoSuchElementException e) {
-       return new SimpleError("Entidade com o ID especificado não foi localizada: ");
+       return new SimpleError("Entidade com o ID especificado não foi localizada.");
     }
 
 

@@ -21,16 +21,15 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/transactions/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login/**").permitAll()
-
                         .requestMatchers(
-                                "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html/**"
                         ).permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().authenticated()
+                )
+
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
