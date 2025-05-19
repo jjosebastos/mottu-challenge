@@ -7,6 +7,9 @@ import br.com.fiap.mottu_challenge.service.PatioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,47 +23,50 @@ public class PatioController {
     private PatioService patioService;
 
 
+    @PostMapping
+    @CacheEvict("patios")
     @Operation(summary = "Criar pátios.", description = "Criação de pátios.",
     responses = {
             @ApiResponse(responseCode = "201", description = "Criação de patio feita com sucesso."),
             @ApiResponse(responseCode = "400", description = "Campos inválidos."),
             @ApiResponse(responseCode = "404", description = "Filial não encontrada.")
     })
-    @PostMapping
     public ResponseEntity<PatioResponse> create(@RequestBody PatioRequest patio){
         var created = patioService.create(patio);
         return ResponseEntity.status(201).body(created);
     }
 
-    @Operation(summary = "Atualizar pátios.", description = "Atualização de pátios.",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Atualização de patio feita com sucesso."),
-                    @ApiResponse(responseCode = "400", description = "Campos inválidos."),
-                    @ApiResponse(responseCode = "404", description = "Filial/Patio não encontrados.")
-            })
+
     @PutMapping("/{id}")
+    @CacheEvict("patios")
+    @Operation(summary = "Atualizar pátios.", description = "Atualização de pátios.", responses = {
+            @ApiResponse(responseCode = "200", description = "Atualiazdo com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+    })
     public ResponseEntity<PatioResponse> update(@PathVariable UUID id, @RequestBody PatioRequest request){
         var updated = patioService.update(id, request);
         return ResponseEntity.status(200).body(updated);
     }
 
-    @Operation(summary = "Deletar pátios.", description = "Atualização da flag de pátios (false).",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Exclusão de patio feita com sucesso."),
-                    @ApiResponse(responseCode = "404", description = "Patio não encontrado.")
-            })
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Deletar pátios.", description = "Atualização da flag de pátios (false).", responses = {
+            @ApiResponse(responseCode = "201", description = "Removido com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+    })
     public void delete(@PathVariable UUID id){
         patioService.delete(id);
     }
 
-    @Operation(summary = "Buscar pátios.", description = "Busca de pátios por id que contenham a flag ativo.",
-            responses = {
-                    @ApiResponse(responseCode = "201", description = "Busca de patio feita com sucesso."),
-                    @ApiResponse(responseCode = "400", description = "Busca inválida."),
-                    @ApiResponse(responseCode = "404", description = "Patio não encontrado.")
-            })
     @GetMapping("/{id}")
+    @Cacheable("patios")
+    @Operation(summary = "Buscar pátios.", description = "Busca de pátios por id que contenham a flag ativo.", responses = {
+            @ApiResponse(responseCode = "201", description = "Encontrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+    })
     public ResponseEntity<Patio> get(@PathVariable UUID id){
         var found = patioService.findById(id);
         return ResponseEntity.status(200).body(found);

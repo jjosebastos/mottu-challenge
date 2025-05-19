@@ -57,6 +57,7 @@ public class PatioService {
         var foundPatio = this.patioRepository.findById(idPatio)
                 .orElseThrow(NoSuchElementException::new);
         foundPatio.setFlagAberto(false);
+        this.patioRepository.save(foundPatio);
     }
 
     public Patio findById(UUID idPatio){
