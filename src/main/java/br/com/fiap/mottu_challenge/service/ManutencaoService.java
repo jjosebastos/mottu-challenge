@@ -59,7 +59,7 @@ public class ManutencaoService {
                 .tipo(manutencao.getTipo())
                 .descricao(manutencao.getDescricao())
                 .status(manutencao.getStatus())
-                .idMoto(manutencao.getMoto() != null ? manutencao.getMoto().getId() : null)
+                .idMoto(manutencao.getMoto() != null ? manutencao.getMoto().getIdMoto() : null)
                 .idSensor(manutencao.getSensor() != null ? manutencao.getSensor().getIdSensor() : null)
                 .build();
     }

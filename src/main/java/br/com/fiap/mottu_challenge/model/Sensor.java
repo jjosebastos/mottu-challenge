@@ -1,9 +1,6 @@
 package br.com.fiap.mottu_challenge.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,12 +21,24 @@ public class Sensor {
     @Id
     @GeneratedValue
     @UuidGenerator
-    @Column(name = "idSensor",
+    @Column(name = "id_sensor",
             nullable = false,
             updatable = false,
             length = 36)
     private UUID idSensor;
     private String tipo;
-    private String firmware;
-    private LocalDateTime dataHoraAtualizacao;
+    private String modelo;
+    private String fabricante;
+    private StatusSensor statusSensor;
+    private String versaoFirmware;
+    private LocalDateTime dataInstalacao;
+    private LocalDate dataCalibracao;
+    private LocalDateTime lastSeen;
+    private Double signalStrength;
+    private Boolean flagAtivo;
+
+
+    @ManyToOne
+    @JoinColumn(name="id_moto")
+    private Moto moto;
 }

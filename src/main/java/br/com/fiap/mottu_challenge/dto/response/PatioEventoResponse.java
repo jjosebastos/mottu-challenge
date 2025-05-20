@@ -1,23 +1,26 @@
 package br.com.fiap.mottu_challenge.dto.response;
 
-import br.com.fiap.mottu_challenge.model.enums.TipoTransicao;
+import br.com.fiap.mottu_challenge.model.enums.TipoEvento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeofenceResponse {
-    private UUID idGeofence;
+public class PatioEventoResponse {
+    private UUID idPatioEvento;
     private Double latitude;
     private Double longitude;
-    private Double radius;
     private String zona;
-    private TipoTransicao tipoTransicao;
-    private UUID idFilial;
+    private TipoEvento tipoEvento;
+    private LocalDateTime timestampEvento;
+    private UUID idPatio;
+    private UUID idMoto;
+    private UUID idSensor;
 }

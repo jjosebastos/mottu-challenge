@@ -58,7 +58,7 @@ public class MotoService {
     }
 
     public Moto getById(UUID idMoto) {
-        return this.motoRepository.findByIdAndFlagAtivoTrue(idMoto);
+        return this.motoRepository.findByIdMotoAndFlagAtivoTrue(idMoto);
     }
 
     public List<Moto> getByModelo(Modelo modelo) {
@@ -70,7 +70,7 @@ public class MotoService {
 
     private MotoResponse motoToResponse(Moto moto) {
         return MotoResponse.builder()
-                .idMoto(moto.getId())
+                .idMoto(moto.getIdMoto())
                 .modelo(moto.getModelo())
                 .placa(moto.getPlaca())
                 .chassi(moto.getChassi())

@@ -19,7 +19,7 @@ public class Moto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID idMoto;
     private String placa;
     private Modelo modelo;
     private String chassi;

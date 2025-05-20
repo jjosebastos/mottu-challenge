@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface MotoRepository extends JpaRepository<Moto, UUID> {
 
-    Moto findByIdAndFlagAtivoTrue(UUID idMoto);
+    Moto findByIdMotoAndFlagAtivoTrue(UUID idMoto);
 }
