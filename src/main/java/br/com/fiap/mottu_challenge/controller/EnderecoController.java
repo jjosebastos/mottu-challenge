@@ -4,13 +4,20 @@ import br.com.fiap.mottu_challenge.dto.request.EnderecoRequest;
 import br.com.fiap.mottu_challenge.dto.request.EnderecoRequestList;
 import br.com.fiap.mottu_challenge.dto.response.EnderecoResponse;
 import br.com.fiap.mottu_challenge.model.Endereco;
+import br.com.fiap.mottu_challenge.model.specification.EnderecoFilter;
+import br.com.fiap.mottu_challenge.repository.EnderecoRepository;
 import br.com.fiap.mottu_challenge.service.EnderecoService;
+import br.com.fiap.mottu_challenge.specification.EnderecoSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +27,21 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/endereco")
-public class EnderecoController {
+public class  EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @GetMapping
+    public Page<Endereco> index(
+            EnderecoFilter filter,
+            @PageableDefault(size = 10, sort = "cidade", direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        var specification = EnderecoSpecification.withFilters(filter);
+        return enderecoRepository.findAll(specification, pageable);
+    }
 
     @PostMapping
     @CacheEvict(value = "enderecos", allEntries = true)

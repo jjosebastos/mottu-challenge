@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class EnderecoResponse {
     private UUID idEndereco;
+    private UUID idFilial;
     private String logradouro;
     private String numero;
     private String bairro;
@@ -20,6 +21,6 @@ public class EnderecoResponse {
     private String uf;
     private String cep;
     private String complemento;
-    private UUID idFilial;
+
 
 }
