@@ -2,13 +2,21 @@ package br.com.fiap.mottu_challenge.controller;
 import br.com.fiap.mottu_challenge.dto.request.FilialRequest;
 import br.com.fiap.mottu_challenge.dto.request.FilialRequestList;
 import br.com.fiap.mottu_challenge.dto.response.FilialResponse;
+import br.com.fiap.mottu_challenge.model.Filial;
+import br.com.fiap.mottu_challenge.model.specification.FilialFilter;
+import br.com.fiap.mottu_challenge.repository.FilialRepository;
 import br.com.fiap.mottu_challenge.service.FilialService;
+import br.com.fiap.mottu_challenge.specification.FilialSpecification;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +31,17 @@ public class FilialController {
 
     @Autowired
     private FilialService filialService;
+
+    @Autowired
+    private FilialRepository filialRepository;
+
+    @GetMapping
+    public Page<Filial> index(
+            FilialFilter filter,
+            @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable){
+        var specification = FilialSpecification.withFilters(filter);
+        return filialRepository.findAll(specification, pageable);
+    }
 
     @PostMapping
     @CacheEvict(value = "filiais", allEntries = true)

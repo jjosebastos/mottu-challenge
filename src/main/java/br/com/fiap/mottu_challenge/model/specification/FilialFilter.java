@@ -1,6 +1,11 @@
 package br.com.fiap.mottu_challenge.model.specification;
 
-public record FilialFilter (
+import br.com.fiap.mottu_challenge.model.enums.CodPais;
 
-) {
+import java.time.LocalDate;
+
+public record FilialFilter (
+        LocalDate dataAberturaInicial,
+        LocalDate dataAberturaFinal,
+        CodPais codPais) {
 }
