@@ -1,0 +1,1547 @@
+type: collection.insomnia.rest/5.0
+name: challenge-mottu
+meta:
+  id: wrk_df794ada20034450b50366aeee59e6df
+  created: 1746204336948
+  modified: 1746204336948
+collection:
+  - name: Filial
+    meta:
+      id: fld_cd6a4395c65c4b38a270c19825abe282
+      created: 1746204362165
+      modified: 1748107983925
+      sortKey: -1747555913461.75
+    children:
+      - url: "{{ _.baseUrl }}/filial"
+        name: CreateFilial
+        meta:
+          id: req_033963a9ed944e40b4b94d56ef11f28f
+          created: 1746204392220
+          modified: 1748111583004
+          isPrivate: false
+          sortKey: -1746204392220
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"filialRequests":[
+            			{
+            				"cnpj": "09400100000194",
+            				"nome": "MOTTU CD BUTANTÃ",
+            				"cdPais": "BRA",
+            				"dataAbertura": "2025-05-02"
+            			},
+            			{
+            				"cnpj": "09400100000194",
+            				"nome": "MOTTU CD PINHEIROS",
+            				"cdPais": "BRA",
+            				"dataAbertura": "2025-05-15"
+            			},
+            			{
+            				"cnpj": "09400100000194",
+            				"nome": "MOTTU CD TATUAPE",
+            				"cdPais": "BRA",
+            				"dataAbertura": "2025-05-15"
+            			}
+            		] 
+            }	
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/filial/c571c49f-a6e8-4ee6-be29-fdb9e23f6664"
+        name: putFilial
+        meta:
+          id: req_3441cce21d4e4dbcad122bdedb5da9fe
+          created: 1746511558997
+          modified: 1747111729083
+          isPrivate: false
+          sortKey: -1745788104425
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"idFilial": "95d612eb-a820-4f38-af18-1742c9558171",
+            	"cnpj": "09400100000194",
+            	"nome": "MOTTU CD ITAQUERA",
+            	"cdPais": "MEX",
+            	"dataAbertura": "2025-05-02"
+            }	
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: false
+          username: jjbastos@mail.com
+          password: "1234"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/filial/6f88e461-5a18-40bd-911c-d040e99913cd"
+        name: GetFilialById
+        meta:
+          id: req_cb99008fbd0141e68a16b91fdcaf4250
+          created: 1746513233109
+          modified: 1747166843118
+          isPrivate: false
+          sortKey: -1745579960527.5
+        method: GET
+        body:
+          mimeType: application/json
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJqamJhc3Rvc0BtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTc0NzE3Mzk5Nn0.Dwe0Ho-mvpia8v4k9Zba8Mzt0A5xl5vbQnQnjzZcPME
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/filial/"
+        name: DeleteFilial
+        meta:
+          id: req_a59ebab6b7fd489f974fa01d9c42e8c4
+          created: 1746641461219
+          modified: 1747108643486
+          isPrivate: false
+          sortKey: -1745684032476.25
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: false
+          username: jjbastos@mail.com
+          password: "1234"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/filial"
+        name: filterEndereco
+        meta:
+          id: req_1200dde3d513423487a54f2e9440ed43
+          created: 1748111646295
+          modified: 1748112611129
+          isPrivate: false
+          sortKey: -1745475888578.75
+        method: GET
+        body:
+          mimeType: application/json
+        parameters:
+          - id: pair_7f75a6379ac4461d922dae16c108d48d
+            name: page
+            value: "0"
+            disabled: false
+          - id: pair_e5eb6659af664f9abad106130919ef75
+            name: size
+            value: "10"
+            disabled: false
+          - id: pair_237fbbcf0af34c92a4b7b0f8c2dc7baf
+            name: sort
+            value: codPais,desc
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJqamJhc3Rvc0BtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImV4cCI6MTc0NzE3Mzk5Nn0.Dwe0Ho-mvpia8v4k9Zba8Mzt0A5xl5vbQnQnjzZcPME
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/filial/all"
+        name: GetAllFilial
+        meta:
+          id: req_402c2a3250c8417f8bf257c00bf591e1
+          created: 1748222664288
+          modified: 1748222701787
+          isPrivate: false
+          sortKey: -1745527924553.125
+        method: GET
+        body:
+          mimeType: application/json
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+          disabled: false
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: User
+    meta:
+      id: fld_f5d1e2dfb6b849319deda1ef966dc367
+      created: 1746208923823
+      modified: 1747698609715
+      sortKey: -1746208923823
+    children:
+      - url: "{{ _.baseUrl }}/users"
+        name: UserPost
+        meta:
+          id: req_a2f9903c7ae94e77aa1970c07d1ca7f9
+          created: 1746208926433
+          modified: 1748107789875
+          isPrivate: false
+          sortKey: -1746208926433
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "jose@mail.com",
+            	"password": "12345",
+            	"role": "ADMIN"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: basic
+          useISO88591: false
+          disabled: true
+          username: jjbastos@mail.com
+          password: $2a$10$KQy/YfDEolL3kR5eyfri3.cY7Rx8GI7DCiPW6ACq3K2d6qOgWQI1W
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/login"
+        name: Login
+        meta:
+          id: req_0edcef1e74ef4517bc341569fb32645c
+          created: 1747117668095
+          modified: 1748108377481
+          isPrivate: false
+          sortKey: -1747117668095
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "jose@mail.com",
+            	"password": "12345"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: none
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Endereco
+    meta:
+      id: fld_13e67164c6f84e4a8d47cf78df8b48a9
+      created: 1746571607589
+      modified: 1748228258914
+      sortKey: -1747555913561.75
+    children:
+      - url: "{{ _.baseUrl }}/endereco"
+        name: CreateEndereco
+        meta:
+          id: req_5364eb0c63d5402ca91d34e350f215a5
+          created: 1746571621163
+          modified: 1748223857130
+          isPrivate: false
+          sortKey: -1746571646375
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            { 
+            	"enderecosList": [
+            		{
+            			"idFilial": "0cb32eb8-5537-42f8-8bc2-2590e4910b2b",
+            			"logradouro": "RUA B",
+            			"numero": "123B",
+            			"bairro": "BAIRRO B",
+            			"cidade": "CIDADE B",
+            			"uf": "CE",
+            			"cep": "00012-040",
+            			"complemento": "PROX A ESTACAO",
+            			"tipoEndereco": "CENTRO DE DISTRIBUICAO"
+            		},
+            		{
+            			"idFilial": "0cb32eb8-5537-42f8-8bc2-2590e4910b2b",
+            			"logradouro": "RUA C",
+            			"numero": "123C",
+            			"bairro": "BAIRRO C",
+            			"cidade": "CIDADE C",
+            			"uf": "BA",
+            			"cep": "00012-040",
+            			"complemento": "PROX A ESTACAO",
+            			"tipoEndereco": "CENTRO DE DISTRIBUICAO"
+            		}
+            	]
+
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/endereco/f0370d96-21c8-4280-b4dc-b08a461b2598"
+        name: GetEnderecoById
+        meta:
+          id: req_46ca1476e6774be3bb7f11c80390129f
+          created: 1746577188998
+          modified: 1748228294209
+          isPrivate: false
+          sortKey: -1746390286404
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/endereco/8105ef88-ca68-4997-bfae-74cc4a7455f2"
+        name: PutEndereco
+        meta:
+          id: req_4b1d8100ba7b48e0b80e666eb61da7f7
+          created: 1746640580140
+          modified: 1748223736625
+          isPrivate: false
+          sortKey: -1746480966389.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"idFilial": "be4a62ca-0854-4aee-9be5-4efe83df05e2",
+            	"logradouro": "RUA B",
+            	"numero": "123B",
+            	"bairro": "BAIRRO C",
+            	"cidade": "CIDADE C",
+            	"uf": "SP",
+            	"cep": "00102-040",
+            	"complemento": "PROX A ESTACAO" 
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/endereco/6f88e461-5a18-40bd-911c-d040e99913cd"
+        name: DeleteEndereco
+        meta:
+          id: req_a3ac0b8cefd542448c410956e6a527bf
+          created: 1746640680838
+          modified: 1748228285473
+          isPrivate: false
+          sortKey: -1746435626396.75
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/endereco"
+        name: EnderecoFilter
+        meta:
+          id: req_3d3f0764779a4bf0aa18dbde06417169
+          created: 1748108728474
+          modified: 1748108973360
+          isPrivate: false
+          sortKey: -1748108728474
+        method: GET
+        parameters:
+          - id: pair_01be7f438f7842939793a0ef040e1f9d
+            name: page
+            value: "1"
+            disabled: false
+          - id: pair_f2cc283c8cf64c3f9ea98206c72c45af
+            name: size
+            value: "10"
+            disabled: false
+          - id: pair_fd264a891662464c9a134c9ee2f1f65d
+            name: sort
+            value: uf,desc
+            disabled: false
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/endereco/all"
+        name: GetAllEndereco
+        meta:
+          id: req_dc451011903d40c4abe518bbf3bed882
+          created: 1748223583788
+          modified: 1748223615810
+          isPrivate: false
+          sortKey: -1746299606418.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.0.2
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Operador
+    meta:
+      id: fld_9449e37fb7e5489b996dc363b3ed6668
+      created: 1746643404297
+      modified: 1748108042842
+      sortKey: -1747523407944.9375
+    children:
+      - url: "{{ _.baseUrl }}/operador"
+        name: CreateOperador
+        meta:
+          id: req_54f7e37b74b3468c84971066be34ca93
+          created: 1746643411792
+          modified: 1748225322640
+          isPrivate: false
+          sortKey: -1746643411792
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"operadoresList": [
+            		{
+            			"id": null,
+            			"nome": "MARCOS SOUZA",
+            			"cpf": "111.222.333-44",
+            			"rg": "01.041.022-X",
+            			"dataNascimento": "2000-08-10"
+            		}
+            	]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/operador/b36e4e2a-9010-431c-b7a4-419518b14562"
+        name: GetOperador
+        meta:
+          id: req_7b1547a1d035456abfd1f6f90c5fc862
+          created: 1746643432578
+          modified: 1748225325588
+          isPrivate: false
+          sortKey: -1746607529083.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/operador/9646190d-e5e1-4cd5-bc92-a8f30ac4ad1c"
+        name: DeleteOperador
+        meta:
+          id: req_bf2904a4daf34bf5af6d7a3eedac2723
+          created: 1746662987593
+          modified: 1748225429583
+          isPrivate: false
+          sortKey: -1746603043744.9375
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/operador/9646190d-e5e1-4cd5-bc92-a8f30ac4ad1c"
+        name: PutOperador
+        meta:
+          id: req_a02abfa5ee1042b186e773ba2582470b
+          created: 1748225240798
+          modified: 1748225400580
+          isPrivate: false
+          sortKey: -1746605286414.2188
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"nome": "MARCOS SOUZA",
+            		"cpf": "111.222.333-44",
+            		"rg": "01.041.022-X",
+            		"dataNascimento": "2000-08-10"
+            	}
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/operador/all"
+        name: GetOperadorAll
+        meta:
+          id: req_88b8ddf2072d4ec697d46145d3895e92
+          created: 1748225412442
+          modified: 1748225418319
+          isPrivate: false
+          sortKey: -1746606407748.8594
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Moto
+    meta:
+      id: fld_feaf873ce97a4ce9a7ab4ec59cfa6d94
+      created: 1747079816660
+      modified: 1748225146212
+      sortKey: -1747539660703.3438
+    children:
+      - url: "{{ _.baseUrl }}/moto"
+        name: CreateMoto
+        meta:
+          id: req_499d3001524d4f5993c1493fef73d683
+          created: 1747079820257
+          modified: 1748225613999
+          isPrivate: false
+          sortKey: -1747079822908
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"placa": "ABC-1234",
+            	"modelo": "MOTTUSPORT",
+            	"chassi": "9BD111060T5002156",
+            	"idOperador": null,
+            	"idPatio": "590ce5a9-4a09-45f7-8450-aa7535002324"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/moto/dfd5d8af-b402-48ad-b79a-a24c69124587"
+        name: PutMoto
+        meta:
+          id: req_fbc50217572248e2a17b8aac00357a29
+          created: 1747080035780
+          modified: 1748225669568
+          isPrivate: false
+          sortKey: -1746861617300
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"placa": "ABC-1234",
+            	"modelo": "MOTTUSPORT",
+            	"chassi": "9BD111060T5002156",
+            	"idOperador": null,
+            	"idPatio": "590ce5a9-4a09-45f7-8450-aa7535002324"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/moto/"
+        name: DeleteMoto
+        meta:
+          id: req_6d09ae752d264492b212741f24e4d93f
+          created: 1747080107948
+          modified: 1747690232884
+          isPrivate: false
+          sortKey: -1746752514546
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/moto/dfd5d8af-b402-48ad-b79a-a24c69124587"
+        name: GetMoto
+        meta:
+          id: req_c9b5dbd7b2784925bb68de58c800d6ae
+          created: 1747080128778
+          modified: 1748225687387
+          isPrivate: false
+          sortKey: -1746697963169
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/moto/modelo/MOTTUSPORT"
+        name: GetModeloMoto
+        meta:
+          id: req_ca327b2fd6b1498e81788e597daa8f63
+          created: 1747080746402
+          modified: 1748225699507
+          isPrivate: false
+          sortKey: -1746670687480.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/moto/all"
+        name: GetAllMoto
+        meta:
+          id: req_ab6ed18e95d1495794b023560444cd7f
+          created: 1748225711336
+          modified: 1748225717946
+          isPrivate: false
+          sortKey: -1746657049636.25
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Sensor
+    meta:
+      id: fld_33fb2f46d1904d13bc1bbf3134ebe408
+      created: 1747085519824
+      modified: 1747088625908
+      sortKey: -1747085519824
+    children:
+      - url: "{{ _.baseUrl }}/sensor"
+        name: CreateSensor
+        meta:
+          id: req_21ee2a273a6c44a29b4c1c78b13232cf
+          created: 1747085527144
+          modified: 1747716217266
+          isPrivate: false
+          sortKey: -1747082684700.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"tipo": "IOT",
+            	"modelo": "ABC-23404",
+            	"fabricante":"Google",
+            	"statusSensor": "ATIVO",
+            	"versaoFirmware": "AB3020312-XA",
+            	"dataInstalacao": "2025-05-12T17:30:00",
+            	"dataCalibracao": "2025-05-12",
+            	"lastSeen": null,
+            	"signalStrength": 4.2,
+            	"idMoto": "0b375813-5e71-4b83-a90c-e1f3c380c763"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/sensor/531dc66e-940c-4d67-8dd3-d26dc92c00a0"
+        name: PutSensor
+        meta:
+          id: req_d436ac98e2e345d9bea878cb6f2bb142
+          created: 1747714875550
+          modified: 1748228042653
+          isPrivate: false
+          sortKey: -1747082684688
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"tipo": "IOT",
+            	"modelo": "ABC-23.4049",
+            	"fabricante":"Google",
+            	"statusSensor": "ATIVO",
+            	"versaoFirmware": "AB3020312-XA",
+            	"dataInstalacao": "2025-05-12T17:30:00",
+            	"dataCalibracao": "2025-05-12",
+            	"lastSeen": null,
+            	"signalStrength": 4.2,
+            	"idMoto": "ee03f35d-91c1-4586-aa30-c5d3fdf97c06"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/sensor/531dc66e-940c-4d67-8dd3-d26dc92c00a0"
+        name: GetSensor
+        meta:
+          id: req_db8f8bca18b3436eb29b7bb4cc1b637e
+          created: 1747714920992
+          modified: 1748228044478
+          isPrivate: false
+          sortKey: -1747082684681.75
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/sensor/531dc66e-940c-4d67-8dd3-d26dc92c00a0"
+        name: DeleteSensor
+        meta:
+          id: req_74491bafac094389b24fca9ca394d845
+          created: 1747714950827
+          modified: 1748228046363
+          isPrivate: false
+          sortKey: -1747082684678.625
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/sensor/all"
+        name: GetAllSensor
+        meta:
+          id: req_0445870413b44e389f8b8be2245a44b6
+          created: 1748227992874
+          modified: 1748228045158
+          isPrivate: false
+          sortKey: -1747082684680.1875
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: PatioEvento
+    meta:
+      id: fld_c7beb11f08a2432b9f870754d16aea73
+      created: 1747088615874
+      modified: 1748227960407
+      sortKey: -1747515281565.7344
+    children:
+      - url: "{{ _.baseUrl }}/patioevento/all"
+        name: GetAllPatioEvento
+        meta:
+          id: req_2727abe5e4374f7f8536ae8286a3b6f6
+          created: 1746731579304
+          modified: 1748228225590
+          isPrivate: false
+          sortKey: -1747088838194
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patioevento"
+        name: CreatePatioEvento
+        meta:
+          id: req_996e1c650c3742f3a17c3bcc650d8d11
+          created: 1747088829767
+          modified: 1747698864211
+          isPrivate: false
+          sortKey: -1747088838094
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"latitude": 80.304,
+            	"longitude": 100.19023,
+            	"zona": "CENTRAL PISO AZUL",
+            	"tipoTransicao": "SAIDA",
+            	"idSensor": "239ae524-3a36-48db-9946-ec538175874f",
+            	"idPatio": "fcfeaf10-7b45-4f0f-b127-6f43adb28b74",
+            	"idMoto": "0548bc44-1f5a-4951-8b6c-4ab5ac1f5d56"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patioevento"
+        name: GetPatioEvento
+        meta:
+          id: req_c1d3f24bf00e49ecb61302b32d347bb0
+          created: 1747698564902
+          modified: 1747698572958
+          isPrivate: false
+          sortKey: -1747085761397.25
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"latitude": 80.304,
+            	"longitude": 100.19023,
+            	"zona": "CENTRAL PISO AZUL",
+            	"tipoTransicao": "SAIDA",
+            	"idSensor": "239ae524-3a36-48db-9946-ec538175874f",
+            	"idPatio": "239ae524-3a36-48db-9946-ec538175874f",
+            	"idMoto": "239ae524-3a36-48db-9946-ec538175874f"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+  - name: Patio
+    meta:
+      id: fld_84addfd676994719800a20b82214fa65
+      created: 1747678232651
+      modified: 1748228051589
+      sortKey: -1747468554885.3164
+    children:
+      - url: "{{ _.baseUrl }}/patio"
+        name: CreatePatio
+        meta:
+          id: req_02fd70cc832f4ca5b7929e65d2d1bc28
+          created: 1747678232652
+          modified: 1748228089474
+          isPrivate: false
+          sortKey: -1747082684700.5
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "PATIO ABC",
+            	"descricao": "Patio retangular com demarcações azuis no chão",
+            	"flagAberto": true,
+            	"idFilial": "7e0a2ed6-c871-484f-8df7-28ad5072a10d"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{token}}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patio/9c91874a-83f4-4ed6-8c26-be05ad8cbef5"
+        name: GetPatio
+        meta:
+          id: req_47fb6a07795d410c83ed20897f5278ad
+          created: 1747681961614
+          modified: 1748228088298
+          isPrivate: false
+          sortKey: -1747082684650.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patio/6fd08d9d-81c4-40db-bc81-83797298b3b6"
+        name: PutPatio
+        meta:
+          id: req_1ab93baa5e5141c7aa53a1509c70c661
+          created: 1747682415084
+          modified: 1748228088932
+          isPrivate: false
+          sortKey: -1747082684675.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"nome": "PATIO ABC",
+            	"descricao": "Patio retangular com demarcações amarelas no chão",
+            	"flagAberto": true,
+            	"idFilial": "0d18da0e-9145-4d94-9475-9ef0b8a5fa70"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patio/6fd08d9d-81c4-40db-bc81-83797298b3b6"
+        name: DeletePatio
+        meta:
+          id: req_2ff6eaa6e12c43ccb1b844c96d249350
+          created: 1747682555661
+          modified: 1748228087143
+          isPrivate: false
+          sortKey: -1747082684625.5
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patio/all"
+        name: GetAllPatio
+        meta:
+          id: req_be948ac8d9054a2fbd0b5e9df24b2659
+          created: 1748228099599
+          modified: 1748228113425
+          isPrivate: false
+          sortKey: -1747082684638
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Manutencao
+    meta:
+      id: fld_930c78fc705f4d50a2c990669f8c1130
+      created: 1747685935529
+      modified: 1748225153645
+      sortKey: -1747511218376.1328
+    children:
+      - url: "{{ _.baseUrl }}/manutencao"
+        name: CreateManutencao
+        meta:
+          id: req_117803aab60b45819bf48de85ecf7b75
+          created: 1747685940058
+          modified: 1747691067822
+          isPrivate: false
+          sortKey: -1747685940058
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"tipo": "TROCA DE MOTOR",
+            	"descricao": "Motor com defeito e moto não da partida",
+            	"status": "EM ANDAMENTO",
+            	"idMoto": "79935647-5d76-42e8-ab74-bab8a425866a",
+            	"idSensor": null
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/manutencao/91027a2a-845a-486e-91bd-c5d067e34d73"
+        name: PutManutencao
+        meta:
+          id: req_52837ad4a9c94fc588988252cf95217c
+          created: 1747691986387
+          modified: 1747692009443
+          isPrivate: false
+          sortKey: -1747425894862
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"tipo": "TROCA DE MOTOR",
+            	"descricao": "Motor com defeito e moto não da partida",
+            	"status": "EM ANDAMENTO",
+            	"idMoto": "79935647-5d76-42e8-ab74-bab8a425866a",
+            	"idSensor": null
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/manutencao/91027a2a-845a-486e-91bd-c5d067e34d73"
+        name: DeleteManutencao
+        meta:
+          id: req_bf091c72c32d4e9f9e446d8111b6139d
+          created: 1747692040250
+          modified: 1747692049912
+          isPrivate: false
+          sortKey: -1747295872264
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/manutencao/91027a2a-845a-486e-91bd-c5d067e34d73"
+        name: GetManutencao
+        meta:
+          id: req_7c6ae2b6b5124dd1aa4055031f529df2
+          created: 1747692057881
+          modified: 1747692077706
+          isPrivate: false
+          sortKey: -1747360883563
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/manutencao/all"
+        name: GetAllManutencao
+        meta:
+          id: req_323daa11d8174cd0b29b493c325a6e96
+          created: 1748228135340
+          modified: 1748228140285
+          isPrivate: false
+          sortKey: -1747328377913.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: PatioGeom
+    meta:
+      id: fld_fc1608ab2d7d467d849e79747a2c3ce5
+      created: 1747695312008
+      modified: 1747695312008
+      sortKey: -1747425891394.5
+    children:
+      - url: "{{ _.baseUrl }}/patiogeom"
+        name: CreatePatioGeom
+        meta:
+          id: req_e4b8ae8002c8454e8268efaa08bcd2e7
+          created: 1747695312010
+          modified: 1748228010677
+          isPrivate: false
+          sortKey: -1747685940058
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"latitudeMinima": 10,
+                "longitudeMinima": 2,
+                "latitudeMaxima": 150,
+                "longitudeMaxima": 100,
+                "idPatio": "917b4007-48c0-49f0-86fa-cfe9a8db7976"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patiogeom/1d50c53f-d80a-447c-9c77-5eb45b39ad35"
+        name: UpdatePatioGeom
+        meta:
+          id: req_b2666549f21d4bba867c1f0fa4b88c5e
+          created: 1747695615142
+          modified: 1748228011656
+          isPrivate: false
+          sortKey: -1747555917460
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            		"latitudeMinima": 10,
+                "longitudeMinima": 2,
+                "latitudeMaxima": 150,
+                "longitudeMaxima": 100,
+                "idPatio": "917b4007-48c0-49f0-86fa-cfe9a8db7976"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patiogeom/1d50c53f-d80a-447c-9c77-5eb45b39ad35"
+        name: GetPatioGeom
+        meta:
+          id: req_3b13bd3aea5a4f56a872b55f43b24b6a
+          created: 1747695645219
+          modified: 1748228012385
+          isPrivate: false
+          sortKey: -1747490906161
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patiogeom/1d50c53f-d80a-447c-9c77-5eb45b39ad35"
+        name: DeletePatioGeom
+        meta:
+          id: req_efe298e388c143a2a5039458838b1adb
+          created: 1747695681342
+          modified: 1748228015005
+          isPrivate: false
+          sortKey: -1747458400511.5
+        method: DELETE
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/patiogeom/all"
+        name: GetAllPatioGeom
+        meta:
+          id: req_dd3b9f0d06ce4ce7b324a15e766ef926
+          created: 1748228021561
+          modified: 1748228028023
+          isPrivate: false
+          sortKey: -1747474653336.25
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.1.0
+        authentication:
+          type: bearer
+          token: "{{ _.token }}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_976fc14fa217a61f0398827664619ace2cd49c00
+    created: 1746204336953
+    modified: 1748222670328
+  cookies:
+    - key: JSESSIONID
+      value: C4F1B2317AB48AD7137BE30941CF5D52
+      domain: localhost
+      path: /
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-05-02T17:00:42.307Z
+      lastAccessed: 2025-05-26T01:24:30.328Z
+      id: e71100a2-57e9-4e0c-9ab4-38cfe7ca8e96
+environments:
+  name: global
+  meta:
+    id: env_976fc14fa217a61f0398827664619ace2cd49c00
+    created: 1746204336951
+    modified: 1748223520799
+    isPrivate: false
+  data:
+    baseUrl: http://localhost:8080
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJqb3NlQG1haWwuY29tIiwicm9sZSI6IkFETUlOIiwiZXhwIjoxNzQ4MjMwNjEzfQ.kd6NwZNwax1_gPUeGUmGo2n02mcMbSKIQGrI1KRhzpc
