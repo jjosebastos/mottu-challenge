@@ -1,129 +1,128 @@
 # 📦 Projeto: Digitalização de Pátios Mottu
 
-## Descrição do Projeto 📃
+## 📃 Descrição do Projeto
 
-No dinâmico cenário da mobilidade urbana, a gestão de grandes frotas como a da Mottu enfrenta desafios significativos. A ausência de um sistema centralizado e em tempo real para monitorar veículos resulta em perdas de tempo na localização de motos, ineficiência operacional, elevação de custos e decisões prejudicadas pela falta de dados precisos. Nós identificamos essa lacuna e desenvolvemos uma solução inovadora para revolucionar o mapeamento geográfico e o rastreamento em tempo real da sua frota de motos.<br><br>
-Nossa solução oferece uma visão clara e dinâmica da distribuição e do status de cada veículo. Imagine ter um mapa interativo onde cada pátio é uma área delimitada e, dentro dela, marcadores visuais indicam a localização exata de cada moto, esteja ela parada ou em movimento. Essa funcionalidade proporciona um rastreamento em tempo real que permite a qualquer operador identificar instantaneamente a moto e sua posição, além de acessar informações cruciais como seu status operacional: se está disponível, em uso, em manutenção ou aguardando retirada. Isso não só facilita o gerenciamento da frota, mas empodera a equipe a visualizar rapidamente a quantidade de motos em cada local, promovendo uma gestão mais proativa e estratégica.<br><br>
-A implementação deste sistema representa um avanço significativo para a Mottu, trazendo benefícios tangíveis que impactam diretamente a eficiência e a economia da operação. A eficiência operacional é aprimorada substancialmente, pois o acesso rápido à localização e ao status das motos elimina a necessidade de buscas manuais, agilizando processos como a retirada de veículos e a organização de manutenções. Isso se traduz em uma redução de custos notável, otimizando recursos e respondendo dinamicamente às demandas do mercado.<br><br>
-Este projeto vai muito além de um simples sistema de rastreamento; ele é um passo fundamental na evolução da gestão de frotas da Mottu. Ao oferecer uma visão clara e em tempo real de seus ativos, nossa solução capacita a empresa a operar com uma eficiência sem precedentes. Acreditamos que essa capacidade de monitoramento inteligente não só aprimora as operações diárias, mas também abre portas para inovações futuras, contribuindo significativamente para um cenário de mobilidade urbana mais conectado, seguro e eficiente. Com este projeto, a Mottu está pavimentando o caminho para um futuro onde a logística de frotas é mais inteligente e responsiva.
+No dinâmico cenário da mobilidade urbana, a gestão de grandes frotas como a da **Mottu** enfrenta desafios significativos. A ausência de um sistema centralizado e em tempo real para monitorar veículos resulta em perda de tempo na localização de motos, ineficiência operacional, aumento de custos e decisões prejudicadas pela falta de dados precisos.
 
-## ☕ Squad: CodeCrafters
+Identificamos essa lacuna e desenvolvemos uma **solução inovadora** para revolucionar o mapeamento geográfico e o rastreamento em tempo real da frota de motos da Mottu.
 
-### 👨‍💻 Membros do Projeto
+### ✨ Benefícios
 
-* Nicolas Dobbeck Mendes
-* José Bezerra Bastos Neto
-* Thiago Henry Dias
+- **Mapa interativo** com áreas delimitadas para cada pátio.
+- Rastreamento em **tempo real** com status operacional:
+  - Disponível
+  - Em uso
+  - Em manutenção
+  - Aguardando retirada
+- Visão clara da **distribuição das motos** em cada local.
+- **Eficiência operacional aprimorada**: elimina buscas manuais.
+- **Redução de custos** e melhor aproveitamento de recursos.
+- Abre espaço para **inovações futuras** na mobilidade urbana.
+
+---
+
+## 👨‍💻 Squad: CodeCrafters
+
+- Nicolas Dobbeck Mendes  
+- José Bezerra Bastos Neto  
+- Thiago Henry Dias  
 
 ---
 
 ## ⚙️ Tecnologias Utilizadas
 
-* **Java 17**
-* **Spring Boot 3.x**
-* **Spring Security com JWT**
-* **Spring Data JPA**
-* **Maven**
-* **Banco de Dados H2 (memória)**
-* **Lombok**
-* **JJWT (Java JWT)**
-* **Bean Validation**
+- **Java 17**
+- **Spring Boot 3.x**
+- **Spring Security com JWT**
+- **Spring Data JPA**
+- **Maven**
+- **Banco de Dados H2 (em memória)**
+- **Lombok**
+- **JJWT (Java JWT)**
+- **Bean Validation**
 
 ---
 
-## 🔐 Segurança com Spring Security e JWT
+## 🔐 Segurança com Spring Security + JWT
 
-A segurança da aplicação é baseada em autenticação e autorização com **JSON Web Tokens (JWT)**.
+A aplicação utiliza **JSON Web Tokens (JWT)** para autenticação e autorização:
 
-**Fluxo de autenticação:**
+### 🔄 Fluxo de Autenticação
 
-1. O cliente envia `username` e `password` para `POST /api/login`.
-2. Se válidos, o sistema gera e retorna um token JWT.
-3. Nas requisições subsequentes, o cliente inclui o token no header:
+1. O cliente envia `username` e `password` via `POST /api/login`.
+2. O sistema gera e retorna um token JWT.
+3. Em chamadas futuras, o token deve ser enviado no header:
 
-   ```http
+   ```
    Authorization: Bearer <token>
    ```
-4. O servidor valida o token em cada acesso a endpoints protegidos.
 
 ---
 
-## 🔄 Fluxo de Criação e Relacionamento de Entidades (UUIDs)
+## 🧱 Criação e Relacionamento de Entidades (UUID)
 
-A modelagem usa **UUID** como chave primária em todas as tabelas e segue o padrão **pai-filho**:
+As entidades utilizam **UUID** como chave primária, com relacionamento **pai-filho**.
 
-1. **Criar Entidade Pai** (ex: Pátio, Filial):
+### 1️⃣ Criar Entidade Pai (ex: Pátio)
 
-   * Requisição `POST` ao controller correspondente.
-   * UUID gerado no back-end via `@GeneratedValue` + `@UuidGenerator`.
-   * Resposta retorna objeto com ID.
+```json
+POST /api/patio
+{
+  "nome": "Pátio Central",
+  "descricao": "Área principal",
+  "flagAberto": true,
+  "filialId": "..."
+}
+```
 
-   ```json
-   POST /api/patio
-   {
-     "nome": "Pátio Central",
-     "descricao": "Área principal",
-     "flagAberto": true,
-     "filialId": "..."
-   }
+Resposta:
 
-   // Retorno:
-   {
-     "idPatio": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
-     "nome": "Pátio Central",
-     ...
-   }
-   ```
+```json
+{
+  "idPatio": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
+  "nome": "Pátio Central",
+  ...
+}
+```
 
-2. **Criar Entidade Filha** (ex: Moto, Sensor, Manutenção):
+### 2️⃣ Criar Entidade Filha (ex: Moto)
 
-   * Usa o UUID da entidade pai no JSON de input.
-   * Spring Data JPA mapeia o relacionamento com `@ManyToOne`.
-
-   ```json
-   POST /api/moto
-   {
-     "placa": "ABC1234",
-     "modelo": "Elétrica",
-     "chassi": "CH123456789XYZ",
-     "patioId": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
-     "operadorId": "0894358e-aba1-4d95-85e5-e82cf04730b9"
-   }
-   ```
-
-3. **Persistência**:
-
-   * O JPA converte JSON → DTO → Entity.
-   * Gera `INSERT` com valor de UUID e chave estrangeira referenciando o pai.
+```json
+POST /api/moto
+{
+  "placa": "ABC1234",
+  "modelo": "Elétrica",
+  "chassi": "CH123456789XYZ",
+  "patioId": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
+  "operadorId": "0894358e-aba1-4d95-85e5-e82cf04730b9"
+}
+```
 
 ---
 
-## 🗂️ Modelos (`@Entity`)
+## 🗂️ Modelagem das Entidades
 
-### Filial ↔ Endereço
+### 🏢 Filial ↔ Endereço
 
 ```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Filial {
   @Id @GeneratedValue @UuidGenerator
-  @Column(name = "idFilial", updatable = false, nullable = false, length = 36)
   private UUID id;
   private String cnpj;
   private String nome;
-  @Enumerated(EnumType.STRING)
-  private CodPais codPais;
   private LocalDate dataAbertura;
-  
+  private CodPais codPais;
+
   @OneToMany(mappedBy = "filial", cascade = CascadeType.ALL)
   private List<Endereco> enderecos;
 }
+```
 
+```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Endereco {
   @Id @GeneratedValue @UuidGenerator
-  @Column(name = "idEndereco", updatable = false, nullable = false, length = 36)
   private UUID idEndereco;
   private String logradouro;
   private String numero;
@@ -135,19 +134,16 @@ public class Endereco {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "filial_id")
-  @JsonBackReference
   private Filial filial;
 }
 ```
 
-### Pátio ↔ Moto ↔ Sensor / Manutenção
+### 🏍️ Pátio ↔ Moto ↔ Sensor / Manutenção
 
 ```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Patio {
   @Id @GeneratedValue @UuidGenerator
-  @Column(name = "idPatio", updatable = false, nullable = false, length = 36)
   private UUID idPatio;
   private String nome;
   private String descricao;
@@ -156,15 +152,15 @@ public class Patio {
   private LocalDateTime timestampUpdated;
 
   @ManyToOne
-  @JoinColumn(name = "filial")
   private Filial filial;
 
   @OneToMany(mappedBy = "patio", cascade = CascadeType.ALL)
   private List<Moto> motos;
 }
+```
 
+```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Moto {
   @Id @GeneratedValue(strategy = GenerationType.UUID)
   private UUID idMoto;
@@ -174,13 +170,9 @@ public class Moto {
   private Boolean flagAtivo;
 
   @ManyToOne
-  @JoinColumn(name = "patio")
-  @JsonBackReference("pa_mo")
   private Patio patio;
 
-  @ManyToOne(optional = true)
-  @JoinColumn(name = "operador")
-  @JsonBackReference("op_mo")
+  @ManyToOne
   private Operador operador;
 
   @OneToMany(mappedBy = "moto", cascade = CascadeType.ALL)
@@ -189,12 +181,12 @@ public class Moto {
   @OneToMany(mappedBy = "moto", cascade = CascadeType.ALL)
   private List<Manutencao> manutencoes;
 }
+```
 
+```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Sensor {
   @Id @GeneratedValue @UuidGenerator
-  @Column(name = "id_sensor", updatable = false, nullable = false, length = 36)
   private UUID idSensor;
   private String tipo;
   private String modelo;
@@ -208,15 +200,14 @@ public class Sensor {
   private Boolean flagAtivo;
 
   @ManyToOne
-  @JoinColumn(name = "id_moto")
   private Moto moto;
 }
+```
 
+```java
 @Entity
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class Manutencao {
   @Id @GeneratedValue @UuidGenerator
-  @Column(name = "idManutencao", updatable = false, nullable = false, length = 36)
   private UUID idManutencao;
   private String tipo;
   private String descricao;
@@ -225,92 +216,150 @@ public class Manutencao {
   private LocalDateTime timestampUpdated;
   private String status;
 
-  @ManyToOne(optional = true)
-  @JoinColumn(name = "moto")
+  @ManyToOne
   private Moto moto;
 
-  @ManyToOne(optional = true)
-  @JoinColumn(name = "sensor")
+  @ManyToOne
   private Sensor sensor;
 }
 ```
 
+```java
+@Entity
+public class PatioEvento {
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(name = "id_patio_evento" ,
+            nullable = false,
+            updatable = false,
+            length = 36
+    )
+    private UUID idPatioEvento;
+    private Double latitude;
+    private Double longitude;
+    private String zona;
+    private TipoEvento tipoEvento;
+    private LocalDateTime timestampEvento;
+
+    @ManyToOne
+    @JoinColumn(name = "id_patio")
+    private Patio patio;
+
+    @ManyToOne
+    @JoinColumn(name = "id_sensor")
+    private Sensor sensor;
+}
+```
+
+```java
+@Entity
+public class PatioGeom {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(name = "idPatioGeom",nullable = false, updatable = false, length = 36)
+    private UUID idPatioGeom;
+    private Double latitudeMin;
+    private Double longitudeMin;
+    private Double latitudeMax;
+    private Double longitudeMax;
+    private Boolean flagAtivo;
+    @ManyToOne
+    @JoinColumn(name = "patio")
+    private Patio patio;
+}
+
+```
+
+
 ---
 
+## ✅ Documentação Interativa (Swagger)
 
-## ✅ Documentação via Swagger
-
-A API está totalmente documentada utilizando o **Swagger UI**, que pode ser acessado ao executar a aplicação e visitar:
+Acesse a documentação automática da API em:
 
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
 
-Lá você poderá:
+Funcionalidades:
 
-* Visualizar todos os endpoints disponíveis.
-* Fazer chamadas `GET`, `POST`, `PUT`, `DELETE` diretamente pela interface.
-* Entender os schemas das entidades e seus relacionamentos.
+- Navegar por todos os endpoints (`GET`, `POST`, `PUT`, `DELETE`)
+- Testar autenticação via JWT
+- Visualizar schemas e exemplos
+- Entender os relacionamentos entre entidades
+
+---
 
 ## 🧪 Testando a API
 
-Use Postman, Insomnia ou cURL.
+Utilize **Postman**, **Insomnia** ou **cURL** para testar a aplicação.
 
-### Autenticação
+### 1️⃣ Criar Usuário
 
 ```http
-POST /api/login
+POST /api/users
+```
+
+Payload:
+
+```json
 {
-  "username": "usuario",
-  "password": "senha"
+  "email": "jose@mail.com",
+  "password": "12345",
+  "role": "ADMIN"
 }
 ```
 
-### Criar e Relacionar Entidades
+### 2️⃣ Login e Token
 
-1. **Filial + Endereço**: criar filial → usar `id` em `POST /api/endereco`.
-2. **Pátio + Moto**: criar pátio → usar `idPatio` em `POST /api/moto`.
-3. **Moto + Sensor/Manutenção**: criar moto → usar `idMoto` em `POST /api/sensor` ou `/api/manutencao`.
+```http
+POST /api/login
+```
 
----
+Payload:
 
-## 🚀 Executando o Projeto
+```json
+{
+  "username": "jose@mail.com",
+  "password": "12345"
+}
+```
 
-1. Clone o repositório:
+Resposta:
 
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-   ```
-2. Instale dependências:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5..."
+}
+```
 
-   ```bash
-   mvn clean install
-   ```
-3. Execute com perfil H2:
+Utilize o token no header das próximas requisições:
 
-   ```bash
-   mvn spring-boot:run -Dspring.profiles.active=h2
-   ```
-
-## Imagem do Dockerhub
-
-Este repositório contém a imagem Docker do projeto *mottu-challenge*, publicada no Docker Hub.
-
-## 📦 Imagem disponível em
-
-[https://hub.docker.com/r/dobbeckm/mottu-challenge](https://hub.docker.com/r/dobbeckm/mottu-challenge)
+```http
+Authorization: Bearer <token>
+```
 
 ---
 
-## Como executar a imagem
+## 🚀 Execução Local
 
-### 1. Baixar a imagem
+```bash
+./mvnw spring-boot:run
+```
 
-bash
-docker pull dobbeckm/mottu-challenge:latest
-docker run -p 8080:8080 dobbeckm/mottu-challenge:latest
+A aplicação estará disponível em:
 
-Após isso acessa a aplicação em:
-bash
+```
 http://localhost:8080
+```
+
+---
+
+## 📌 Observações Finais
+
+Este projeto representa um **salto tecnológico** na gestão de frotas da Mottu, oferecendo controle em tempo real, automação e inteligência de dados. Ele promove a **evolução digital dos pátios** e reforça o compromisso com a **eficiência, segurança e inovação** na mobilidade urbana. Agradecimentos ao Professor João Carlos e Lima da disciplina de Java Advanced.
+
+
