@@ -1,5 +1,10 @@
 # 📦 Projeto: Digitalização de Patios Mottu
 ## ☕ Squad: CodeCrafters
+## Membros do Projeto 👨‍💻
+
+- Nicolas Dobbeck Mendes  
+- José Bezerra Bastos Neto  
+- Thiago Henry Dias
 
 ## ⚙️ Tecnologias Utilizadas
 
@@ -9,7 +14,6 @@
 - **Spring Security com JWT**
 - **Spring Data JPA**
 - **Banco de Dados H2 (memória)**
-- **Banco de Dados Oracle**
 - **Lombok**
 - **JJWT (Java JWT)**
 - **Validation**
@@ -33,21 +37,8 @@ A aplicação suporta dois perfis de execução:
 - Configuração no arquivo `application-h2.properties`.
 - Ideal para testes locais e desenvolvimento rápido.
 
-### 🔸 Perfil `oracle` (produção)
 
-- Conexão com banco de dados Oracle.
-- Configuração no arquivo `application-oracle.properties`.
-- Utilizado em ambientes de produção.
 
-Para alternar entre os perfis, utilize o parâmetro `--spring.profiles.active` ao iniciar a aplicação:
-
-```bash
-# Para o perfil H2
-mvn spring-boot:run -Dspring-boot.run.profiles=h2
-
-# Para o perfil Oracle
-mvn spring-boot:run -Dspring-boot.run.profiles=oracle
-```
 
 ## 🧪 Testando a API
 
@@ -55,7 +46,7 @@ Após iniciar a aplicação, você pode testar os endpoints utilizando ferrament
 
 ### 🔐 Autenticação
 
-**Endpoint:** `POST /api/auth/login`
+**Endpoint:** `POST /api/login`
 
 **Payload:**
 
@@ -102,8 +93,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
 
    ```bash
    # Para o perfil H2
-   mvn spring-boot:run -Dspring-boot.run.profiles=h2
-
-   # Para o perfil Oracle
-   mvn spring-boot:run -Dspring-boot.run.profiles=oracle
+   mvn spring-boot:run
    ```
