@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.*;
 
@@ -75,6 +76,17 @@ public class EnderecoService {
         var updated = this.enderecoRepository.save(found);
 
         return this.toFilialResponse(updated);
+    }
+
+    public List<EnderecoResponse> findAll() {
+        var enderecos = this.enderecoRepository.findAll();
+        if(enderecos.isEmpty()) {
+            throw new NoSuchElementException();
+
+        }
+        return enderecos.stream()
+                .map(this::toFilialResponse)
+                .toList();
     }
 
     private Endereco enderecoMapper(EnderecoRequest request) {

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -58,6 +59,16 @@ public class FilialService {
             throw new NoSuchElementException();
         }
         this.repository.deleteById(id);
+    }
+
+    public List<FilialResponse> findAll() {
+        var filiais = this.repository.findAll();
+        if (filiais.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return filiais.stream()
+                .map(this::toFilialResponse)
+                .toList();
     }
 
     public FilialResponse getById(UUID id) {

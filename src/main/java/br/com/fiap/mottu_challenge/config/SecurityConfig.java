@@ -19,20 +19,29 @@ public class SecurityConfig {
     private AuthFilter authFilter;
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+        http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/users/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/login/**").permitAll()
+                        // suas regras abertas
+                        .requestMatchers(HttpMethod.POST, "/users/**", "/login/**").permitAll()
+                        // liberar Swagger UI e API docs
                         .requestMatchers(
                                 "/swagger-ui/**",
-                                "/swagger-ui.html/**"
+                                "/swagger-ui.html",
+                                "/v3/api-docs/**",
+                                "/v3/api-docs.yaml",
+                                "/v3/api-docs.yaml/**",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/webjars/**"
                         ).permitAll()
+                        // todo o resto protegido
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .csrf(AbstractHttpConfigurer::disable)
-                .build();
+                .csrf(AbstractHttpConfigurer::disable);
+        return http.build();
     }
     @Bean
     PasswordEncoder passwordEncoder() {

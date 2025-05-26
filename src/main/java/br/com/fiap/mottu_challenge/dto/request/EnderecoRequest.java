@@ -28,6 +28,4 @@ public class EnderecoRequest {
     private String cep;
     @NotBlank
     private String complemento;
-    @NotBlank
-    private String tipoEndereco;
 }

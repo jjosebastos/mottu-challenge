@@ -34,7 +34,14 @@ public class  EnderecoController {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+
     @GetMapping
+    @Operation(summary = "Busca Endereços Specification", description = "Busca endereços com base em filters",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
+                    @ApiResponse(responseCode = "404", description = "Endereco não encontrado.")
+            })
     public Page<Endereco> index(
             EnderecoFilter filter,
             @PageableDefault(size = 10, sort = "cidade", direction = Sort.Direction.DESC) Pageable pageable
@@ -68,19 +75,6 @@ public class  EnderecoController {
         return ResponseEntity.ok(updated);
     }
 
-    @GetMapping("/{id}")
-    @Cacheable("enderecos")
-    @Operation(summary = "Busca Endereços", description = "Busca endereços com base no ID fornecido",
-        responses = {
-            @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
-            @ApiResponse(responseCode = "404", description = "Endereco não encontrado.")
-    })
-    public ResponseEntity<Endereco> getById(@PathVariable UUID id) {
-        var found = this.enderecoService.getById(id);
-        return ResponseEntity.ok(found);
-    }
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Remove Endereços", description = "Remove o Endereço com base no ID fornecido.",
@@ -93,7 +87,29 @@ public class  EnderecoController {
         this.enderecoService.delete(id);
     }
 
+    @GetMapping("/all")
+    @Operation(summary = "Buscar Enderecos", description = "Fazer a busca de todas as filiais",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Endereços não encontrados")
+            }
+    )
+    public ResponseEntity<List<EnderecoResponse>> findAll() {
+        var found = this.enderecoService.findAll();
+        return ResponseEntity.ok(found);
+    }
 
-
+    @GetMapping("/{id}")
+    @Cacheable("enderecos")
+    @Operation(summary = "Busca Endereços", description = "Busca endereços com base no ID fornecido",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
+                    @ApiResponse(responseCode = "404", description = "Endereco não encontrado.")
+            })
+    public ResponseEntity<Endereco> getById(@PathVariable UUID id) {
+        var found = this.enderecoService.getById(id);
+        return ResponseEntity.ok(found);
+    }
 
 }

@@ -36,6 +36,12 @@ public class FilialController {
     private FilialRepository filialRepository;
 
     @GetMapping
+    @Operation(summary = "Busca Filial Specification", description = "Busca filial com base em filters",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
+                    @ApiResponse(responseCode = "404", description = "Filial não encontrada.")
+            })
     public Page<Filial> index(
             FilialFilter filter,
             @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable){
@@ -71,14 +77,38 @@ public class FilialController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Remover filiais", description = "Atualiza a flag de filial com base no ID fornecido.", responses = {
+            @ApiResponse(responseCode = "204", description = "Removido com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+    })
     public void delete(@PathVariable UUID id) {
         this.filialService.delete(id);
     }
 
     @Cacheable("filiais")
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar Filial", description = "Busca registros de Manutenção com base no ID fornecido.",  responses = {
+            @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+    })
     public ResponseEntity<FilialResponse> get(@PathVariable UUID id) {
         var found = filialService.getById(id);
+        return ResponseEntity.ok(found);
+    }
+
+
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar filiais", description = "Fazer a busca de todas as filiais",
+            responses = {
+                    @ApiResponse(responseCode = "200"),
+                    @ApiResponse(responseCode = "404")
+            }
+    )
+    public ResponseEntity<List<FilialResponse>> geAll() {
+        var found = filialService.findAll();
         return ResponseEntity.ok(found);
     }
 }
