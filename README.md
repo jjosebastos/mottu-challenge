@@ -1,97 +1,365 @@
-# 📦 Projeto: Digitalização de Patios Mottu
-## ☕ Squad: CodeCrafters
-## Membros do Projeto 👨‍💻
+# 📦 Projeto: Digitalização de Pátios Mottu
+
+## 📃 Descrição do Projeto
+
+No dinâmico cenário da mobilidade urbana, a gestão de grandes frotas como a da **Mottu** enfrenta desafios significativos. A ausência de um sistema centralizado e em tempo real para monitorar veículos resulta em perda de tempo na localização de motos, ineficiência operacional, aumento de custos e decisões prejudicadas pela falta de dados precisos.
+
+Identificamos essa lacuna e desenvolvemos uma **solução inovadora** para revolucionar o mapeamento geográfico e o rastreamento em tempo real da frota de motos da Mottu.
+
+### ✨ Benefícios
+
+- **Mapa interativo** com áreas delimitadas para cada pátio.
+- Rastreamento em **tempo real** com status operacional:
+  - Disponível
+  - Em uso
+  - Em manutenção
+  - Aguardando retirada
+- Visão clara da **distribuição das motos** em cada local.
+- **Eficiência operacional aprimorada**: elimina buscas manuais.
+- **Redução de custos** e melhor aproveitamento de recursos.
+- Abre espaço para **inovações futuras** na mobilidade urbana.
+
+---
+
+## 👨‍💻 Squad: CodeCrafters
 
 - Nicolas Dobbeck Mendes  
 - José Bezerra Bastos Neto  
-- Thiago Henry Dias
+- Thiago Henry Dias  
+
+---
 
 ## ⚙️ Tecnologias Utilizadas
 
 - **Java 17**
 - **Spring Boot 3.x**
-- **Maven**
 - **Spring Security com JWT**
 - **Spring Data JPA**
-- **Banco de Dados H2 (memória)**
+- **Maven**
+- **Banco de Dados H2 (em memória)**
 - **Lombok**
 - **JJWT (Java JWT)**
-- **Validation**
+- **Bean Validation**
 
-## 🔐 Segurança com Spring Security e JWT
+---
 
-A aplicação implementa autenticação e autorização utilizando JSON Web Tokens (JWT). O fluxo de segurança é o seguinte:
+## 🔐 Segurança com Spring Security + JWT
 
-1. O usuário envia suas credenciais para o endpoint de autenticação.
-2. Se as credenciais forem válidas, um JWT é gerado e retornado.
-3. O cliente utiliza esse token para acessar endpoints protegidos, enviando-o no cabeçalho `Authorization` como `Bearer <token>`.
-4. O backend valida o token em cada requisição e autoriza o acesso conforme as permissões do usuário.
+A aplicação utiliza **JSON Web Tokens (JWT)** para autenticação e autorização:
 
-## 🗄️ Configuração de Perfis: H2 e Oracle
+### 🔄 Fluxo de Autenticação
 
-A aplicação suporta dois perfis de execução:
+1. O cliente envia `username` e `password` via `POST /api/login`.
+2. O sistema gera e retorna um token JWT.
+3. Em chamadas futuras, o token deve ser enviado no header:
 
-### 🔹 Perfil `h2` (desenvolvimento)
+   ```
+   Authorization: Bearer <token>
+   ```
 
-- Banco de dados em memória H2.
-- Configuração no arquivo `application-h2.properties`.
-- Ideal para testes locais e desenvolvimento rápido.
+---
+
+## 🧱 Criação e Relacionamento de Entidades (UUID)
+
+As entidades utilizam **UUID** como chave primária, com relacionamento **pai-filho**.
+
+### 1️⃣ Criar Entidade Pai (ex: Pátio)
+
+```json
+POST /api/patio
+{
+  "nome": "Pátio Central",
+  "descricao": "Área principal",
+  "flagAberto": true,
+  "filialId": "..."
+}
+```
+
+Resposta:
+
+```json
+{
+  "idPatio": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
+  "nome": "Pátio Central",
+  ...
+}
+```
+
+### 2️⃣ Criar Entidade Filha (ex: Moto)
+
+```json
+POST /api/moto
+{
+  "placa": "ABC1234",
+  "modelo": "Elétrica",
+  "chassi": "CH123456789XYZ",
+  "patioId": "c8206c8c-1e22-48cc-a3b4-9a78f19bb23a",
+  "operadorId": "0894358e-aba1-4d95-85e5-e82cf04730b9"
+}
+```
+
+---
+
+## 🗂️ Modelagem das Entidades
+
+### 🏢 Filial ↔ Endereço
+
+```java
+@Entity
+public class Filial {
+  @Id @GeneratedValue @UuidGenerator
+  private UUID id;
+  private String cnpj;
+  private String nome;
+  private LocalDate dataAbertura;
+  private CodPais codPais;
+
+  @OneToMany(mappedBy = "filial", cascade = CascadeType.ALL)
+  private List<Endereco> enderecos;
+}
+```
+
+```java
+@Entity
+public class Endereco {
+  @Id @GeneratedValue @UuidGenerator
+  private UUID idEndereco;
+  private String logradouro;
+  private String numero;
+  private String bairro;
+  private String cidade;
+  private String uf;
+  private String cep;
+  private String complemento;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "filial_id")
+  private Filial filial;
+}
+```
+
+### 🏍️ Pátio ↔ Moto ↔ Sensor / Manutenção
+
+```java
+@Entity
+public class Patio {
+  @Id @GeneratedValue @UuidGenerator
+  private UUID idPatio;
+  private String nome;
+  private String descricao;
+  private Boolean flagAberto;
+  private LocalDateTime timestampCreated;
+  private LocalDateTime timestampUpdated;
+
+  @ManyToOne
+  private Filial filial;
+
+  @OneToMany(mappedBy = "patio", cascade = CascadeType.ALL)
+  private List<Moto> motos;
+}
+```
+
+```java
+@Entity
+public class Moto {
+  @Id @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID idMoto;
+  private String placa;
+  private Modelo modelo;
+  private String chassi;
+  private Boolean flagAtivo;
+
+  @ManyToOne
+  private Patio patio;
+
+  @ManyToOne
+  private Operador operador;
+
+  @OneToMany(mappedBy = "moto", cascade = CascadeType.ALL)
+  private List<Sensor> sensores;
+
+  @OneToMany(mappedBy = "moto", cascade = CascadeType.ALL)
+  private List<Manutencao> manutencoes;
+}
+```
+
+```java
+@Entity
+public class Sensor {
+  @Id @GeneratedValue @UuidGenerator
+  private UUID idSensor;
+  private String tipo;
+  private String modelo;
+  private String fabricante;
+  private StatusSensor statusSensor;
+  private String versaoFirmware;
+  private LocalDateTime dataInstalacao;
+  private LocalDate dataCalibracao;
+  private LocalDateTime lastSeen;
+  private Double signalStrength;
+  private Boolean flagAtivo;
+
+  @ManyToOne
+  private Moto moto;
+}
+```
+
+```java
+@Entity
+public class Manutencao {
+  @Id @GeneratedValue @UuidGenerator
+  private UUID idManutencao;
+  private String tipo;
+  private String descricao;
+  private Boolean flagAtivo;
+  private LocalDateTime timestampCreated;
+  private LocalDateTime timestampUpdated;
+  private String status;
+
+  @ManyToOne
+  private Moto moto;
+
+  @ManyToOne
+  private Sensor sensor;
+}
+```
+
+```java
+@Entity
+public class PatioEvento {
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(name = "id_patio_evento" ,
+            nullable = false,
+            updatable = false,
+            length = 36
+    )
+    private UUID idPatioEvento;
+    private Double latitude;
+    private Double longitude;
+    private String zona;
+    private TipoEvento tipoEvento;
+    private LocalDateTime timestampEvento;
+
+    @ManyToOne
+    @JoinColumn(name = "id_patio")
+    private Patio patio;
+
+    @ManyToOne
+    @JoinColumn(name = "id_sensor")
+    private Sensor sensor;
+}
+```
+
+```java
+@Entity
+public class PatioGeom {
+
+    @Id
+    @GeneratedValue
+    @UuidGenerator
+    @Column(name = "idPatioGeom",nullable = false, updatable = false, length = 36)
+    private UUID idPatioGeom;
+    private Double latitudeMin;
+    private Double longitudeMin;
+    private Double latitudeMax;
+    private Double longitudeMax;
+    private Boolean flagAtivo;
+    @ManyToOne
+    @JoinColumn(name = "patio")
+    private Patio patio;
+}
+
+```
 
 
+---
 
+## ✅ Documentação Interativa (Swagger)
+
+Acesse a documentação automática da API em:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+Funcionalidades:
+
+- Navegar por todos os endpoints (`GET`, `POST`, `PUT`, `DELETE`)
+- Testar autenticação via JWT
+- Visualizar schemas e exemplos
+- Entender os relacionamentos entre entidades
+
+---
 
 ## 🧪 Testando a API
 
-Após iniciar a aplicação, você pode testar os endpoints utilizando ferramentas como Postman ou cURL.
+Utilize **Postman**, **Insomnia** ou **cURL** para testar a aplicação.
 
-### 🔐 Autenticação
+### 1️⃣ Criar Usuário
 
-**Endpoint:** `POST /api/login`
+```http
+POST /api/users
+```
 
-**Payload:**
+Payload:
 
 ```json
 {
-  "username": "usuario",
-  "password": "senha"
+  "email": "jose@mail.com",
+  "password": "12345",
+  "role": "ADMIN"
 }
 ```
 
-**Resposta:**
+### 2️⃣ Login e Token
+
+```http
+POST /api/login
+```
+
+Payload:
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
+  "username": "jose@mail.com",
+  "password": "12345"
 }
 ```
 
-### 🔒 Acesso a Endpoints Protegidos
+Resposta:
 
-Inclua o token JWT no cabeçalho `Authorization`:
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5..."
+}
+```
+
+Utilize o token no header das próximas requisições:
+
+```http
+Authorization: Bearer <token>
+```
+
+---
+
+## 🚀 Execução Local
+
+```bash
+./mvnw spring-boot:run
+```
+
+A aplicação estará disponível em:
 
 ```
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
+http://localhost:8080
 ```
 
+---
 
-## 🚀 Executando a Aplicação
+## 📌 Observações Finais
 
-1. **Clone o repositório:**
+Este projeto representa um **salto tecnológico** na gestão de frotas da Mottu, oferecendo controle em tempo real, automação e inteligência de dados. Ele promove a **evolução digital dos pátios** e reforça o compromisso com a **eficiência, segurança e inovação** na mobilidade urbana. Agradecimentos ao Professor João Carlos e Lima da disciplina de Java Advanced.
 
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-   ```
 
-2. **Compile o projeto:**
-
-   ```bash
-   mvn clean install
-   ```
-
-3. **Inicie a aplicação:**
-
-   ```bash
-   # Para o perfil H2
-   mvn spring-boot:run
-   ```
