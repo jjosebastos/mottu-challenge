@@ -1,6 +1,7 @@
 package br.com.fiap.mottu_challenge.controller;
 
 import br.com.fiap.mottu_challenge.dto.request.PatioGeomRequest;
+import br.com.fiap.mottu_challenge.dto.response.PatioEventoResponse;
 import br.com.fiap.mottu_challenge.dto.response.PatioGeomResponse;
 import br.com.fiap.mottu_challenge.model.PatioGeom;
 import br.com.fiap.mottu_challenge.service.PatioGeomService;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -69,6 +71,18 @@ public class PatioGeomController {
     public ResponseEntity<PatioGeom> getById(@PathVariable UUID id) {
         var saved = this.patioGeomService.findById(id);
         return ResponseEntity.status(200).body(saved);
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar PatioGeom", description = "Fazer a busca de todos os PatioGeoms",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado.")
+            }
+    )
+    public ResponseEntity<List<PatioGeomResponse>> getAll() {
+        var found = this.patioGeomService.findAll();
+        return ResponseEntity.ok(found);
     }
 
 }

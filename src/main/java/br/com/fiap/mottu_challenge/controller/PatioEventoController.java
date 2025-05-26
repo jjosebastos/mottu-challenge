@@ -3,6 +3,7 @@ package br.com.fiap.mottu_challenge.controller;
 
 import br.com.fiap.mottu_challenge.dto.request.PatioEventoRequest;
 import br.com.fiap.mottu_challenge.dto.response.PatioEventoResponse;
+import br.com.fiap.mottu_challenge.dto.response.PatioResponse;
 import br.com.fiap.mottu_challenge.model.PatioEvento;
 import br.com.fiap.mottu_challenge.service.PatioEventoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +47,18 @@ public class PatioEventoController {
     })
     public ResponseEntity<PatioEventoResponse> getById(@PathVariable UUID id){
         var found = this.patioEventoService.findById(id);
+        return ResponseEntity.ok(found);
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar PatioEventos", description = "Fazer a busca de todos os PatioEventos",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado.")
+            }
+    )
+    public ResponseEntity<List<PatioEventoResponse>> getAll() {
+        var found = this.patioEventoService.findAll();
         return ResponseEntity.ok(found);
     }
 }

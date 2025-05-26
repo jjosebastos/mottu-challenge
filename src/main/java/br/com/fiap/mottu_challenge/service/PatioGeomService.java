@@ -10,8 +10,10 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PatioGeomService {
@@ -60,6 +62,14 @@ public class PatioGeomService {
             throw new NoSuchElementException();
         }
         return foundPatioGeom;
+    }
+
+    public List<PatioGeomResponse> findAll() {
+        var patioGeom = this.patioGeomRepository.findAll();
+        if(patioGeom.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return patioGeom.stream().map(this::toPatioGeomResponse).toList();
     }
 
     private PatioGeomResponse toPatioGeomResponse(PatioGeom patioGeom) {

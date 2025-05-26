@@ -54,6 +54,14 @@ public class OperadorService {
         return ResponseEntity.ok(response);
     }
 
+    public List<OperadorResponse> findAll() {
+        var operadores = this.operadorRepository.findAll();
+        if(operadores.isEmpty())
+            throw new NoSuchElementException();
+
+        return operadores.stream().map(this::toOperadorResponse).toList();
+    }
+
 
     private OperadorResponse toOperadorResponse(Operador operador) {
         return OperadorResponse.builder()

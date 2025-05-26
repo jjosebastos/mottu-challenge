@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -69,6 +70,18 @@ public class ManutencaoController {
     public ResponseEntity<Manutencao> get(@PathVariable UUID id) {
         var found = this.manutencaoService.findById(id);
         return ResponseEntity.status(200).body(found);
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar manutenções", description = "Fazer a busca de todas as manutenções",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Registros não encontrados.")
+            }
+    )
+    public ResponseEntity<List<ManutencaoResponse>> getAll(){
+        var manutencoes = this.manutencaoService.findAll();
+        return ResponseEntity.ok(manutencoes);
     }
 }
 

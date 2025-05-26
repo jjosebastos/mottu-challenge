@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ManutencaoService {
@@ -73,6 +75,14 @@ public class ManutencaoService {
 
     public Manutencao findById(UUID idManutencao) {
         return getManutencao(idManutencao);
+    }
+
+    public List<ManutencaoResponse> findAll(){
+        var manutencoes = this.manutencaoRepository.findAll();
+        if (manutencoes.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+        return manutencoes.stream().map(this::toManutencaoResponse).toList();
     }
 
     private Manutencao getManutencao(UUID id) {

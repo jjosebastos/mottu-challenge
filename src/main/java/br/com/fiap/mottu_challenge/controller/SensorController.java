@@ -1,6 +1,7 @@
 package br.com.fiap.mottu_challenge.controller;
 
 import br.com.fiap.mottu_challenge.dto.request.SensorRequest;
+import br.com.fiap.mottu_challenge.dto.response.PatioEventoResponse;
 import br.com.fiap.mottu_challenge.dto.response.SensorResponse;
 import br.com.fiap.mottu_challenge.model.Sensor;
 import br.com.fiap.mottu_challenge.service.SensorService;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -69,5 +71,17 @@ public class SensorController {
     })
     public void deleteSensor(@PathVariable UUID id) {
         this.sensorService.deleteById(id);
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar Sensores", description = "Fazer a busca de todos os Sensores",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                    @ApiResponse(responseCode = "404", description = "Nenhum registro encontrado.")
+            }
+    )
+    public ResponseEntity<List<SensorResponse>> getAll() {
+        var found = this.sensorService.findAll();
+        return ResponseEntity.ok(found);
     }
 }

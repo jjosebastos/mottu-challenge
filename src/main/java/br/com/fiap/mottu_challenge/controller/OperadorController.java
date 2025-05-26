@@ -2,6 +2,7 @@ package br.com.fiap.mottu_challenge.controller;
 
 import br.com.fiap.mottu_challenge.dto.request.OperadorRequest;
 import br.com.fiap.mottu_challenge.dto.request.OperadorRequestList;
+import br.com.fiap.mottu_challenge.dto.response.ManutencaoResponse;
 import br.com.fiap.mottu_challenge.dto.response.OperadorResponse;
 import br.com.fiap.mottu_challenge.model.Operador;
 import br.com.fiap.mottu_challenge.service.OperadorService;
@@ -72,6 +73,18 @@ public class OperadorController {
             })
     public void delete(@PathVariable UUID id) {
         this.operadorService.deleteById(id);
+    }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar Operadores", description = "Fazer a busca de todas os operadores",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Registros não encontrados.")
+            }
+    )
+    public ResponseEntity<List<OperadorResponse>> getAll(){
+        var manutencoes = this.operadorService.findAll();
+        return ResponseEntity.ok(manutencoes);
     }
 
 

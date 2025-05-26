@@ -1,6 +1,7 @@
 package br.com.fiap.mottu_challenge.service;
 
 import br.com.fiap.mottu_challenge.dto.request.PatioRequest;
+import br.com.fiap.mottu_challenge.dto.response.FilialResponse;
 import br.com.fiap.mottu_challenge.dto.response.PatioResponse;
 import br.com.fiap.mottu_challenge.model.Filial;
 import br.com.fiap.mottu_challenge.model.Patio;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PatioService {
@@ -67,6 +70,14 @@ public class PatioService {
         }
         return foundPatio;
 
+    }
+
+    public List<PatioResponse> findAll(){
+        var patios = this.patioRepository.findAll();
+        if(patios.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return patios.stream().map(this::toPatioResponse).toList();
     }
 
     private PatioResponse toPatioResponse(Patio patio){

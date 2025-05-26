@@ -13,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -48,6 +50,14 @@ public class SensorService {
         foundSensor.setStatusSensor(StatusSensor.DESATIVADO);
         this.sensorRepository.save(foundSensor);
 
+    }
+
+    public List<SensorResponse> findAll(){
+        var sensores = this.sensorRepository.findAll();
+        if(sensores.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return sensores.stream().map(this::toSensorResponse).toList();
     }
 
     public SensorResponse getById(UUID id) {

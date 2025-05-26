@@ -1,6 +1,7 @@
 package br.com.fiap.mottu_challenge.controller;
 
 import br.com.fiap.mottu_challenge.dto.request.MotoRequest;
+import br.com.fiap.mottu_challenge.dto.response.ManutencaoResponse;
 import br.com.fiap.mottu_challenge.dto.response.MotoResponse;
 import br.com.fiap.mottu_challenge.model.Moto;
 import br.com.fiap.mottu_challenge.model.enums.Modelo;
@@ -91,6 +92,19 @@ public class MotoController {
         var foundModelo = this.motoService.getByModelo(modelo);
         return ResponseEntity.ok(foundModelo);
     }
+
+    @GetMapping("/all")
+    @Operation(summary = "Buscar Motos", description = "Fazer a busca de todas as Motos",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+                    @ApiResponse(responseCode = "404", description = "Registros não encontrados.")
+            }
+    )
+    public ResponseEntity<List<MotoResponse>> getAll(){
+        var manutencoes = this.motoService.findAll();
+        return ResponseEntity.ok(manutencoes);
+    }
+
 
 }
 

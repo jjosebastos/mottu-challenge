@@ -1,6 +1,7 @@
 package br.com.fiap.mottu_challenge.service;
 
 import br.com.fiap.mottu_challenge.dto.request.MotoRequest;
+import br.com.fiap.mottu_challenge.dto.response.ManutencaoResponse;
 import br.com.fiap.mottu_challenge.dto.response.MotoResponse;
 import br.com.fiap.mottu_challenge.model.Moto;
 import br.com.fiap.mottu_challenge.model.Operador;
@@ -66,6 +67,14 @@ public class MotoService {
         return findAll.stream()
                 .filter(moto -> moto.getModelo().equals(modelo))
                 .toList();
+    }
+
+    public List<MotoResponse> findAll(){
+        var manutencoes = this.motoRepository.findAll();
+        if(manutencoes.isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return manutencoes.stream().map(this::motoToResponse).toList();
     }
 
     private MotoResponse motoToResponse(Moto moto) {
