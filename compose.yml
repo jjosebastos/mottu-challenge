@@ -1,0 +1,25 @@
+  services:
+    postgres:
+      image: 'postgres:latest'
+      container_name: 'mottu-postgres'
+      environment:
+        - 'POSTGRES_DB=mottu'
+        - 'POSTGRES_USER=admin'
+        - 'POSTGRES_PASSWORD=admin'
+      ports:
+        - '5432:5432'
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U admin"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+
+    app:
+      image: mottu-challenge
+      container_name: 'mottu-app'
+      build: .
+      ports:
+        - '8080:8080'
+      depends_on:
+        postgres:
+          condition: service_healthy
