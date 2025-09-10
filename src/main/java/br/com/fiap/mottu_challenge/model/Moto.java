@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "t_mtu_moto")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

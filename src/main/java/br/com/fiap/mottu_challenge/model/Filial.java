@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "t_mtu_filial")
 @Data
 @Builder
 @NoArgsConstructor

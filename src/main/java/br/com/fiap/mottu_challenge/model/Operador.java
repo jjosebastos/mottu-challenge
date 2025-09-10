@@ -1,9 +1,6 @@
 package br.com.fiap.mottu_challenge.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "t_mtu_operador")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

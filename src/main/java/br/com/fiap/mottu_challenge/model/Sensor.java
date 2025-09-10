@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@Table(name = "t_mtu_sensor")
 @Entity
 @Builder
 @AllArgsConstructor

@@ -14,6 +14,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@Table(name = "t_mtu_patio_evento")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
