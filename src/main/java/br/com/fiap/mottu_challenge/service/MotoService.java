@@ -32,6 +32,8 @@ public class MotoService {
         moto.setPlaca(request.getPlaca());
         moto.setModelo(request.getModelo());
         moto.setChassi(request.getChassi());
+        moto.setStatus(request.getStatus());
+        moto.setSetor(request.getSetor());
         moto.setFlagAtivo(true);
         moto.setOperador(getOperador(request.getIdOperador()));
         moto.setPatio(getPatio(request.getIdPatio()));
@@ -45,6 +47,8 @@ public class MotoService {
         foundMoto.setPlaca(request.getPlaca());
         foundMoto.setModelo(request.getModelo());
         foundMoto.setChassi(request.getChassi());
+        foundMoto.setStatus(request.getStatus());
+        foundMoto.setSetor(request.getSetor());
         foundMoto.setPatio(getPatio(request.getIdPatio()));
         foundMoto.setOperador(getOperador(request.getIdOperador()));
         var updatedMoto = this.motoRepository.save(foundMoto);
@@ -83,6 +87,8 @@ public class MotoService {
                 .modelo(moto.getModelo())
                 .placa(moto.getPlaca())
                 .chassi(moto.getChassi())
+                .status(moto.getStatus())
+                .setor(moto.getSetor())
                 .idOperador(moto.getOperador() != null ? moto.getOperador().getIdOperador() : null)
                 .idPatio(moto.getPatio().getIdPatio())
                 .build();

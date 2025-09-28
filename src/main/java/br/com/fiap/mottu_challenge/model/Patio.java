@@ -20,18 +20,29 @@ public class Patio {
     @Id
     @GeneratedValue
     @UuidGenerator
-    @Column(name = "idPatio",
+    @Column(name = "id_patio",
             updatable = false,
             nullable = false,
             length = 36)
     private UUID idPatio;
+    
+    @Column(name = "nm_patio")
     private String nome;
+    
+    @Column(name = "ds_patio")
     private String descricao;
-    private Boolean flagAberto;
+    
+    @Column(name = "fl_aberto", columnDefinition = "char(1)")
+    private String flagAberto;
+    
+    @Column(name = "ts_created", columnDefinition = "timestamptz")
     private LocalDateTime timestampCreated;
+    
+    @Column(name = "ts_update", columnDefinition = "timestamptz")
     private LocalDateTime timestampUpdated;
+    
     @ManyToOne
-    @JoinColumn(name = "filial")
+    @JoinColumn(name = "id_filial")
     private Filial filial;
 
 }

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface PatioRepository extends JpaRepository<Patio, UUID> {
-    Patio findByIdPatioAndFlagAbertoTrue(UUID idPatio);
+    Patio findByIdPatioAndFlagAberto(UUID idPatio, String flagAberto);
 }

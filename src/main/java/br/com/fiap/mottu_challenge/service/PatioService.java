@@ -27,19 +27,24 @@ public class PatioService {
 
     @Transactional
     public PatioResponse create(PatioRequest request){
-        var idFilial = request.getIdFilial();
-        var found = filialRepository.findById(idFilial)
-                .orElseThrow(NoSuchElementException::new);
+        try {
+            var idFilial = request.getIdFilial();
+            var found = filialRepository.findById(idFilial)
+                    .orElseThrow(() -> new NoSuchElementException("Filial não encontrada com ID: " + idFilial));
 
-        var patio = new Patio();
-        patio.setNome(request.getNome());
-        patio.setFlagAberto(request.getFlagAberto());
-        patio.setDescricao(request.getDescricao());
-        patio.setTimestampCreated(LocalDateTime.now());
-        patio.setTimestampUpdated(null);
-        patio.setFilial(found);
-        var saved = this.patioRepository.save(patio);
-        return toPatioResponse(saved);
+            var patio = new Patio();
+            patio.setNome(request.getNome());
+            patio.setFlagAberto(request.getFlagAberto());
+            patio.setDescricao(request.getDescricao());
+            patio.setTimestampCreated(LocalDateTime.now());
+            patio.setTimestampUpdated(null);
+            patio.setFilial(found);
+            
+            var saved = this.patioRepository.save(patio);
+            return toPatioResponse(saved);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao criar pátio: " + e.getMessage(), e);
+        }
     }
 
 
@@ -59,12 +64,12 @@ public class PatioService {
     public void delete(UUID idPatio){
         var foundPatio = this.patioRepository.findById(idPatio)
                 .orElseThrow(NoSuchElementException::new);
-        foundPatio.setFlagAberto(false);
+        foundPatio.setFlagAberto("N");
         this.patioRepository.save(foundPatio);
     }
 
     public Patio findById(UUID idPatio){
-        var foundPatio = this.patioRepository.findByIdPatioAndFlagAbertoTrue(idPatio);
+        var foundPatio = this.patioRepository.findByIdPatioAndFlagAberto(idPatio, "S");
         if(foundPatio == null){
             throw new NoSuchElementException();
         }

@@ -15,7 +15,7 @@ public class PatioResponse {
     private UUID idPatio;
     private String nome;
     private String descricao;
-    private Boolean flagAberto;
+    private String flagAberto;
     private UUID idFilial;
 
 }

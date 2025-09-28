@@ -1,6 +1,5 @@
 package br.com.fiap.mottu_challenge.dto.response;
 
-import br.com.fiap.mottu_challenge.model.enums.Modelo;
 import br.com.fiap.mottu_challenge.model.enums.Setor;
 import br.com.fiap.mottu_challenge.model.enums.StatusMoto;
 import lombok.AllArgsConstructor;
@@ -14,13 +13,10 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MotoResponse {
+public class MotoPatioResponse {
     private UUID idMoto;
     private String placa;
-    private Modelo modelo;
-    private String chassi;
     private StatusMoto status;
     private Setor setor;
-    private UUID idPatio;
-    private UUID idOperador;
+    private String cor;
 }

@@ -24,15 +24,19 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     private Long id;
 
     @Email
+    @Column(name = "nr_email")
     private String email;
 
     @NotBlank
+    @Column(name = "pw_senha")
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "vl_role")
     private UserRole role;
 
     @Override
@@ -43,5 +47,4 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
-
 }

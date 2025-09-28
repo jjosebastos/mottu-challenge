@@ -21,13 +21,21 @@ public class Operador {
     @Id
     @GeneratedValue
     @UuidGenerator
-    @Column(name = "idFilial",
+    @Column(name = "id_operador",
             updatable = false,
             nullable = false,
             length = 36)
     private UUID idOperador;
+    
+    @Column(name = "nm_operador")
     private String nome;
+    
+    @Column(name = "nr_cpf")
     private String cpf;
+    
+    @Column(name = "nr_rg")
     private String rg;
+    
+    @Column(name = "dt_inscricao")
     private LocalDate dataNascimento;
 }

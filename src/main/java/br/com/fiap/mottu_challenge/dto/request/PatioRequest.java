@@ -15,8 +15,8 @@ public class PatioRequest {
     private String nome;
     @NotBlank(message = "Descrição requerida.")
     private String descricao;
-    @NotNull(message = "Flag aberto não pode ser nulo.")
-    private Boolean flagAberto;
+    @NotBlank(message = "Flag aberto não pode ser vazio.")
+    private String flagAberto;
     @NotNull(message = "O id não pode ser nulo.")
     private UUID idFilial;
 }
