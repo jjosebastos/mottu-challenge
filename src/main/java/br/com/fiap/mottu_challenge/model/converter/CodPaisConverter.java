@@ -9,22 +9,11 @@ public class CodPaisConverter implements AttributeConverter<CodPais, String> {
 
     @Override
     public String convertToDatabaseColumn(CodPais codPais) {
-        if (codPais == null) {
-            return null;
-        }
-        return codPais.getCodPais();
+        return codPais != null ? codPais.getCodigo() : null;
     }
 
     @Override
-    public CodPais convertToEntityAttribute(String codPais) {
-        if (codPais == null) {
-            return null;
-        }
-        for (CodPais pais : CodPais.values()) {
-            if (pais.getCodPais().equals(codPais)) {
-                return pais;
-            }
-        }
-        throw new IllegalArgumentException("Código de país inválido: " + codPais);
+    public CodPais convertToEntityAttribute(String codigo) {
+        return codigo != null ? CodPais.fromCodigo(codigo) : null;
     }
 }

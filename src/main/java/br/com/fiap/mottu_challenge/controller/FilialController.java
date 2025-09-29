@@ -1,4 +1,5 @@
 package br.com.fiap.mottu_challenge.controller;
+
 import br.com.fiap.mottu_challenge.dto.request.FilialRequest;
 import br.com.fiap.mottu_challenge.dto.request.FilialRequestList;
 import br.com.fiap.mottu_challenge.dto.response.FilialResponse;
@@ -28,87 +29,92 @@ import java.util.UUID;
 @RequestMapping("/filial")
 public class FilialController {
 
+        @Autowired
+        private FilialService filialService;
 
-    @Autowired
-    private FilialService filialService;
+        @Autowired
+        private FilialRepository filialRepository;
 
-    @Autowired
-    private FilialRepository filialRepository;
-
-    @GetMapping
-    @Operation(summary = "Busca Filial Specification", description = "Busca filial com base em filters",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
-                    @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
-                    @ApiResponse(responseCode = "404", description = "Filial não encontrada.")
-            })
-    public Page<Filial> index(
-            FilialFilter filter,
-            @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable){
-        var specification = FilialSpecification.withFilters(filter);
-        return filialRepository.findAll(specification, pageable);
-    }
-
-    @PostMapping
-    @CacheEvict(value = "filiais", allEntries = true)
-    @Operation(summary = "Cadastrar filial", description = "Insere uma filial.", responses = {
-            @ApiResponse(responseCode = "201"),
-            @ApiResponse(responseCode = "400"),
-    })
-    public ResponseEntity<List<FilialResponse>> create(@Valid @RequestBody FilialRequestList input) {
-        var created = filialService.create(input);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(created);
-    }
-
-    @PutMapping("/{id}")
-    @CacheEvict(value = "filiais", allEntries = true)
-    @Operation(summary = "Atualizar filial", description = "Fazer a atualização das filiais",
-        responses = {
-                @ApiResponse(responseCode = "200"),
-                @ApiResponse(responseCode = "400"),
-                @ApiResponse(responseCode = "404")
+        @GetMapping
+        @Operation(summary = "Busca Filial Specification", description = "Busca filial com base em filters", responses = {
+                        @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                        @ApiResponse(responseCode = "400", description = "ID fornecido inválido."),
+                        @ApiResponse(responseCode = "404", description = "Filial não encontrada.")
+        })
+        public Page<Filial> index(
+                        FilialFilter filter,
+                        @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+                var specification = FilialSpecification.withFilters(filter);
+                return filialRepository.findAll(specification, pageable);
         }
-    )
-    public ResponseEntity<FilialResponse> update(@PathVariable UUID id, @Valid @RequestBody FilialRequest input) {
-        var updated = filialService.update(id, input);
-        return ResponseEntity.ok(updated);
-    }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Remover filiais", description = "Atualiza a flag de filial com base no ID fornecido.", responses = {
-            @ApiResponse(responseCode = "204", description = "Removido com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
-            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
-    })
-    public void delete(@PathVariable UUID id) {
-        this.filialService.delete(id);
-    }
+        @PostMapping
+        @CacheEvict(value = "filiais", allEntries = true)
+        @Operation(summary = "Cadastrar filial", description = "Insere uma filial.", responses = {
+                        @ApiResponse(responseCode = "201"),
+                        @ApiResponse(responseCode = "400"),
+        })
+        public ResponseEntity<List<FilialResponse>> create(@Valid @RequestBody FilialRequestList input) {
+                var created = filialService.create(input);
+                return ResponseEntity.status(HttpStatus.CREATED)
+                                .body(created);
+        }
 
-    @Cacheable("filiais")
-    @GetMapping("/{id}")
-    @Operation(summary = "Buscar Filial", description = "Busca registros de Manutenção com base no ID fornecido.",  responses = {
-            @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
-            @ApiResponse(responseCode = "400", description = "Requisição inválida."),
-            @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
-    })
-    public ResponseEntity<FilialResponse> get(@PathVariable UUID id) {
-        var found = filialService.getById(id);
-        return ResponseEntity.ok(found);
-    }
+        @PutMapping("/{id}")
+        @CacheEvict(value = "filiais", allEntries = true)
+        @Operation(summary = "Atualizar filial", description = "Fazer a atualização das filiais", responses = {
+                        @ApiResponse(responseCode = "200"),
+                        @ApiResponse(responseCode = "400"),
+                        @ApiResponse(responseCode = "404")
+        })
+        public ResponseEntity<FilialResponse> update(@PathVariable UUID id, @Valid @RequestBody FilialRequest input) {
+                var updated = filialService.update(id, input);
+                return ResponseEntity.ok(updated);
+        }
 
+        @DeleteMapping("/{id}")
+        @ResponseStatus(HttpStatus.NO_CONTENT)
+        @Operation(summary = "Remover filiais", description = "Atualiza a flag de filial com base no ID fornecido.", responses = {
+                        @ApiResponse(responseCode = "204", description = "Removido com sucesso."),
+                        @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+                        @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+        })
+        public void delete(@PathVariable UUID id) {
+                this.filialService.delete(id);
+        }
 
+        @Cacheable("filiais")
+        @GetMapping("/{id}")
+        @Operation(summary = "Buscar Filial", description = "Busca registros de Manutenção com base no ID fornecido.", responses = {
+                        @ApiResponse(responseCode = "200", description = "Encontrado com sucesso."),
+                        @ApiResponse(responseCode = "400", description = "Requisição inválida."),
+                        @ApiResponse(responseCode = "404", description = "Registro não encontrado.")
+        })
+        public ResponseEntity<FilialResponse> get(@PathVariable UUID id) {
+                var found = filialService.getById(id);
+                return ResponseEntity.ok(found);
+        }
 
-    @GetMapping("/all")
-    @Operation(summary = "Buscar filiais", description = "Fazer a busca de todas as filiais",
-            responses = {
-                    @ApiResponse(responseCode = "200"),
-                    @ApiResponse(responseCode = "404")
-            }
-    )
-    public ResponseEntity<List<FilialResponse>> geAll() {
-        var found = filialService.findAll();
-        return ResponseEntity.ok(found);
-    }
+        @GetMapping("/all")
+        public ResponseEntity<?> getAll() {
+                try {
+                        var found = filialService.findAll();
+                        return ResponseEntity.ok(found);
+                } catch (Exception e) {
+                        e.printStackTrace(); // Para debug
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                        .body("Erro ao buscar filiais: " + e.getMessage());
+                }
+        }
+
+        @GetMapping("/test")
+        public ResponseEntity<String> test() {
+                try {
+                        long count = filialRepository.count();
+                        return ResponseEntity.ok("Total de filiais no banco: " + count);
+                } catch (Exception e) {
+                        return ResponseEntity.internalServerError()
+                                        .body("Erro no banco: " + e.getMessage());
+                }
+        }
 }

@@ -63,12 +63,9 @@ public class FilialService {
 
     public List<FilialResponse> findAll() {
         var filiais = this.repository.findAll();
-        if (filiais.isEmpty()) {
-            throw new NoSuchElementException();
-        }
         return filiais.stream()
-                .map(this::toFilialResponse)
-                .toList();
+            .map(this::toFilialResponse)
+            .toList();
     }
 
     public FilialResponse getById(UUID id) {
