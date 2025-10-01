@@ -26,7 +26,7 @@ public class PatioMappingService {
     }
 
     public SetorResponse getMotosBySetor(Setor setor) {
-        List<Moto> motos = motoRepository.findBySetorAndFlagAtivoTrue(setor);
+        List<Moto> motos = motoRepository.findBySetor(setor);
         
         List<MotoPatioResponse> motosResponse = motos.stream()
                 .map(this::convertToMotoPatioResponse)
@@ -55,8 +55,10 @@ public class PatioMappingService {
     }
 
     public MotoPatioResponse getMotoByPlaca(String placa) {
-        Moto moto = motoRepository.findByPlacaAndFlagAtivoTrue(placa)
-                .orElseThrow(() -> new RuntimeException("Moto não encontrada"));
+        // CORREÇÃO: Trocamos o método antigo "findByPlacaAndFlagAtivoTrue"
+        // pelo novo "findByPlaca" que criamos no repositório.
+        Moto moto = motoRepository.findByPlaca(placa)
+                .orElseThrow(() -> new RuntimeException("Moto não encontrada com a placa: " + placa));
         
         return convertToMotoPatioResponse(moto);
     }

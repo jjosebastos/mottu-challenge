@@ -10,9 +10,7 @@ import java.util.UUID;
 
 public interface MotoRepository extends JpaRepository<Moto, UUID> {
 
-    Moto findByIdMotoAndFlagAtivoTrue(UUID idMoto);
+    List<Moto> findBySetor(Setor setor);
     
-    List<Moto> findBySetorAndFlagAtivoTrue(Setor setor);
-    
-    Optional<Moto> findByPlacaAndFlagAtivoTrue(String placa);
+    Optional<Moto> findByPlaca(String placa);
 }

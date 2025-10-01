@@ -41,9 +41,6 @@ public class Moto {
     @Enumerated(EnumType.STRING)
     private Setor setor;
 
-    @Column(name = "fl_status")
-    private Boolean flagAtivo;
-
     @JsonBackReference("pa_mo")
     @ManyToOne
     @JoinColumn(name = "id_patio")

@@ -43,7 +43,8 @@ public class FilialController {
         })
         public Page<Filial> index(
                         FilialFilter filter,
-                        @PageableDefault(size = 10, sort = "date", direction = Sort.Direction.DESC) Pageable pageable) {
+                        // ===== CORREÇÃO APLICADA AQUI =====
+                        @PageableDefault(size = 10, sort = "dataAbertura", direction = Sort.Direction.DESC) Pageable pageable) {
                 var specification = FilialSpecification.withFilters(filter);
                 return filialRepository.findAll(specification, pageable);
         }

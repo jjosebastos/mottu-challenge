@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS t_mtu_moto (
   nm_modelo varchar(50) NOT NULL,
   nr_placa varchar(10) NOT NULL,
   nr_chassi varchar(25),
-  fl_status char(1) NOT NULL,
+  status varchar(20) NOT NULL,
   id_operador uuid,
   id_patio uuid,
   CONSTRAINT fk_moto_operador FOREIGN KEY (id_operador) REFERENCES t_mtu_operador (id_operador) ON UPDATE NO ACTION ON DELETE SET NULL,

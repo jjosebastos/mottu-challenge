@@ -1,16 +1,19 @@
 package br.com.fiap.mottu_challenge.dto.request;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FilialRequestList {
+
     @Valid
-    @NotEmpty
-    List<FilialRequest> filialRequests;
+    private List<FilialRequest> filialRequests;
 }

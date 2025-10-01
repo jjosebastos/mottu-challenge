@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // suas regras abertas
-                        .requestMatchers(HttpMethod.POST, "/users/**", "/login/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users/**", "/login/**", "/firebase-login").permitAll()
                         // liberar Swagger UI e API docs
                         .requestMatchers(
                                 "/swagger-ui/**",
