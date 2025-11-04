@@ -1,0 +1,1 @@
+ALTER TABLE t_mtu_user ADD COLUMN ds_push_token VARCHAR(255);

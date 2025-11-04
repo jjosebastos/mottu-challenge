@@ -7,6 +7,8 @@ import br.com.fiap.mottu_challenge.model.Filial;
 import br.com.fiap.mottu_challenge.repository.FilialRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger; // <-- 1. IMPORTE O LOGGER
+import org.slf4j.LoggerFactory; // <-- 2. IMPORTE O LOGGER FACTORY
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,12 @@ public class FilialService {
     @Autowired
     private FilialRepository repository;
 
+    @Autowired
+    private ExpoNotificationService notificationService;
+
+    // Logger para o try-catch
+    private static final Logger logger = LoggerFactory.getLogger(FilialService.class);
+
     @Transactional
     public List<FilialResponse> create(FilialRequestList input) {
         var filialRequest = input.getFilialRequests();
@@ -32,7 +40,29 @@ public class FilialService {
         var novasFiliais = filialRequest.stream()
                 .map(this::filialMapper)
                 .toList();
+        
+        // Salva as filiais no banco (operação principal)
         var created = repository.saveAll(novasFiliais);
+
+        // ==== ✨ 4. CHAME O SERVIÇO DE NOTIFICAÇÃO (SEGUNDO PLANO) ✨ ====
+        try {
+            int count = novasFiliais.size();
+            String title = "Nova Filial Cadastrada!";
+            
+            // Formata a mensagem dependendo se foi 1 ou várias filiais
+            String body = (count == 1) 
+                ? "Uma nova filial (" + novasFiliais.get(0).getNome() + ") foi adicionada!" 
+                : count + " novas filiais foram cadastradas!";
+            
+            // O @Async no método fará com que isso rode em segundo plano
+            notificationService.sendNotificationToAll(title, body);
+
+        } catch (Exception e) {
+            // Se o envio da notificação falhar, nós apenas registramos o erro.
+            // A operação principal (criar a filial) NÃO é revertida.
+            logger.error("A filial foi criada, mas falhou ao enviar a notificação.", e);
+        }
+        // =======================================================
 
         return created.stream()
                 .map(this::toFilialResponse)
@@ -64,8 +94,8 @@ public class FilialService {
     public List<FilialResponse> findAll() {
         var filiais = this.repository.findAll();
         return filiais.stream()
-            .map(this::toFilialResponse)
-            .toList();
+                .map(this::toFilialResponse)
+                .toList();
     }
 
     public FilialResponse getById(UUID id) {

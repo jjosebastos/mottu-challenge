@@ -35,6 +35,7 @@ public class SecurityConfig {
                                 "/configuration/security",
                                 "/webjars/**"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/push/register").authenticated()
                         // todo o resto protegido
                         .anyRequest().authenticated()
                 )

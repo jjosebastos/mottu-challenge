@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column(name = "vl_role")
     private UserRole role;
 
+    @Column(name = "ds_push_token")
+    private String pushToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.toString()));
