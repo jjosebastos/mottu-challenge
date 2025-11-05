@@ -13,6 +13,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import br.com.fiap.mottu_challenge.dto.response.MotoResponse;
+import br.com.fiap.mottu_challenge.service.MotoService;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +25,9 @@ public class PatioController {
 
     @Autowired
     private PatioService patioService;
+
+    @Autowired
+    private MotoService motoService;
 
 
     @PostMapping
@@ -84,6 +89,18 @@ public class PatioController {
     public ResponseEntity<List<PatioResponse>> getAll() {
         var found = this.patioService.findAll();
         return ResponseEntity.ok(found);
+    }
+
+    @GetMapping("/{idPatio}/motos")
+    @Operation(summary = "Buscar Motos por Pátio", description = "Fazer a busca de todas as Motos de um Pátio específico",
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Encontrado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Pátio não encontrado.")
+        }
+    )
+    public ResponseEntity<List<MotoResponse>> getMotosByPatioId(@PathVariable UUID idPatio) {
+        var motos = this.motoService.findByPatioId(idPatio);
+        return ResponseEntity.ok(motos);
     }
 
 }

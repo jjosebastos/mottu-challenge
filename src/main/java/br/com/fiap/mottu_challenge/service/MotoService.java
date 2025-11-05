@@ -81,6 +81,13 @@ public class MotoService {
                 .toList();
     }
 
+    public List<MotoResponse> findByPatioId(UUID idPatio) {
+        return this.motoRepository.findByPatioIdPatio(idPatio)
+                .stream()
+                .map(this::motoToResponse) // Reutiliza seu mapper
+                .toList();
+    }
+
     private MotoResponse motoToResponse(Moto moto) {
         return MotoResponse.builder()
                 .idMoto(moto.getIdMoto())

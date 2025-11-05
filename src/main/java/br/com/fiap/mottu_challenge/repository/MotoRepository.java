@@ -13,4 +13,6 @@ public interface MotoRepository extends JpaRepository<Moto, UUID> {
     List<Moto> findBySetor(Setor setor);
     
     Optional<Moto> findByPlaca(String placa);
+
+    List<Moto> findByPatioIdPatio(UUID idPatio);
 }

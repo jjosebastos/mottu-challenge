@@ -79,9 +79,6 @@ public class PatioService {
 
     public List<PatioResponse> findAll(){
         var patios = this.patioRepository.findAll();
-        if(patios.isEmpty()){
-            throw new NoSuchElementException();
-        }
         return patios.stream().map(this::toPatioResponse).toList();
     }
 
@@ -91,7 +88,7 @@ public class PatioService {
                 .nome(patio.getNome())
                 .descricao(patio.getDescricao())
                 .flagAberto(patio.getFlagAberto())
-                .idFilial(patio.getFilial().getId())
+                .idFilial(patio.getFilial() != null ? patio.getFilial().getId() : null)
                 .build();
     }
 }
